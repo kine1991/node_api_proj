@@ -22,6 +22,14 @@ exports.getAllCars = async (req, res) => {
             query.sort(sortQuery)
         } 
 
+        // 3) Limit
+        if(req.query.fields){
+            const fieldsQuery = req.query.fields.split(',').join(' ')
+            // console.log(fieldsQuery)  // brand,model,price,year,color => brand model price year color
+            query = query.select(fieldsQuery) // исключаем name duration brand model price year color   _id по умолчанию включенно
+        } else {
+            query = query.select('-__v'); //исключаем __v
+        }
 
 
 
