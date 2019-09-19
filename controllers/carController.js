@@ -2,7 +2,24 @@ const Car = require('../models/carModels')
 
 
 exports.getAllCars = async (req, res) => {
-    res.send('getAllCars');
+    try{
+        const cars = await Car.find({})
+
+        res.status(200).json({
+            status: 'success',
+            retults: cars.length,
+            data: {
+                cars: cars
+            }
+        })
+    } catch(err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err
+        })
+    }
+    
+
 }
 
 exports.getCar = async (req, res) => {
