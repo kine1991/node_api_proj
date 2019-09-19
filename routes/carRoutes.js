@@ -3,20 +3,21 @@ const carController = require('../controllers/carController');
 
 const router = express.Router();
 
+
+router.route('/').get(carController.getAllCars).post(carController.postCar)
+router.route('/:id').get(carController.getCar).patch(carController.updateCar).delete(carController.deleteCar)
+
+
+module.exports = router;
+
+
+
 // router.get('/', (req, res) => {
 //     res.send('Birds home page');
 // });
 
 
 // router.get('/', carController.getAllCars)
-router.route('/').get(carController.getAllCars).post(carController.postCar)
-
-router.route('/:id').get(carController.getCar).patch(carController.updateCar)
-
-
-module.exports = router;
-
-
 
 // exports.getAllTours = async (req, res) => {
 //     try {

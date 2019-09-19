@@ -78,3 +78,19 @@ exports.updateCar = async (req, res) => {
         })
     }
 }
+
+exports.deleteCar = async (req, res) => {
+    try {
+      await Car.findByIdAndDelete(req.params.id);
+      res.status(204).json({
+        status: 'success',
+        car: null
+      });
+    } catch (err) {
+      res.status(404).json({
+        status: 'fail',
+        message: 'err'
+      });
+    }
+  };
+  
