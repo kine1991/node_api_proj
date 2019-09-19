@@ -4,10 +4,9 @@ const Car = require('../models/carModels')
 exports.getAllCars = async (req, res) => {
     try{
         // const cars = await Car.find({ fuelType: { $regex: "elec", $options: '-i' }})
-
         // 1) Filtering
-        const queryObj = req.query;
-        const excludedFields = ['page', 'sort', 'limit', 'fields'];
+        let queryObj = {...req.query};
+        let excludedFields = ['page', 'sort', 'limit', 'fields'];
         excludedFields.forEach(el => delete queryObj[el])
 
         // 1.1) Advanced filtering
@@ -15,6 +14,16 @@ exports.getAllCars = async (req, res) => {
         queryStr = queryStr.replace(/\b(gte?|lte?)\b/g, match => `$${match}`)
         // console.log(queryStr)
         let query = Car.find(JSON.parse(queryStr));
+
+        // 2) Sorting
+        if(req.query.sort){
+            const sortQuery = req.query.sort.split(',').join(' ')
+            // console.log(sortQuery) // -cylinder price
+            query.sort(sortQuery)
+        } 
+
+
+
 
         
         const cars = await query
