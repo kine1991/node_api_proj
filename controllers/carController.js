@@ -23,8 +23,22 @@ exports.getAllCars = async (req, res) => {
 }
 
 exports.getCar = async (req, res) => {
-    const id = req.params.id
-    res.send('getCar ' +id);
+    try{
+        const car = await Car.findById(req.params.id)
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                car: car
+            }
+        })
+    } catch(err){
+        res.status(404).json({
+            status: 'fail',
+            message: err
+        })
+    }
+    
 }
 
 exports.postCar = async (req, res) => {
