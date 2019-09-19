@@ -22,7 +22,7 @@ exports.getAllCars = async (req, res) => {
             query.sort(sortQuery)
         } 
 
-        // 3) Limit
+        // 3) Select some fields
         if(req.query.fields){
             const fieldsQuery = req.query.fields.split(',').join(' ')
             // console.log(fieldsQuery)  // brand,model,price,year,color => brand model price year color
@@ -30,6 +30,20 @@ exports.getAllCars = async (req, res) => {
         } else {
             query = query.select('-__v'); //исключаем __v
         }
+
+        // 4) Pagination
+        const page = req.query.page * 1 || 1;
+        const limit = req.query.limit * 1 || 100;
+        const skip = (page - 1) * limit;
+        
+        if (req.query.page) {
+            const numTours = await Car.countDocuments(); // countDocuments соличество документов
+            if (skip >= numTours) throw new Error('This page does not exist');
+        }
+        
+        query = query.skip(skip).limit(limit);
+        
+
 
 
 
