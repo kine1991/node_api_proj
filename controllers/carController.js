@@ -52,13 +52,29 @@ exports.postCar = async (req, res) => {
         });
     } catch (err){
         res.status(400).json({
-            status: 'success',
+            status: 'fail',
             massage: err
         })
     }
-
-
-    // console.log('req.body')
-    // console.log(req.body)
-    // const newCar = await Car.create(req.body);
 } 
+
+exports.updateCar = async (req, res) => {
+    try{
+        const car = await Car.findByIdAndUpdate(req.params.id, {"model": "model"}, {
+            new: true,
+            runValidators: true,
+        })
+
+        res.status(201).json({
+            status: 'success',
+            data: {
+              car: car
+            }
+        });
+    }catch(err){
+        res.status(400).json({
+            status: 'fail',
+            massage: err
+        })
+    }
+}

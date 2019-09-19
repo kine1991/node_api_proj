@@ -11,7 +11,7 @@ const router = express.Router();
 // router.get('/', carController.getAllCars)
 router.route('/').get(carController.getAllCars).post(carController.postCar)
 
-router.route('/:id').get(carController.getCar)
+router.route('/:id').get(carController.getCar).patch(carController.updateCar)
 
 
 module.exports = router;
