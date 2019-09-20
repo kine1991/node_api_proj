@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 let carSchema = new mongoose.Schema({
     brand:  {
@@ -79,7 +80,21 @@ let carSchema = new mongoose.Schema({
     },
 
 
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
+
+// virtual property do not use in query
+carSchema.virtual('priceInRubles').get(function(){
+    return this.price * 60;
+}); 
+
+carSchema.pre('save', function(next){
+    return this.slug = slugify(this.name, { lower: true });
+    next()
+})
 
 const Car = mongoose.model('Car', carSchema);
   
