@@ -93,8 +93,13 @@ carSchema.virtual('priceInRubles').get(function(){
 
 carSchema.pre('save', function(next){
     return this.slug = slugify(this.name, { lower: true });
-    next()
-})
+    next();
+});
+
+carSchema.pre(/^find/, function(next){
+    this.find({protectCar: { $ne: true }});
+    next();
+});
 
 const Car = mongoose.model('Car', carSchema);
   
