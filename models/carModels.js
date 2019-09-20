@@ -60,6 +60,18 @@ let carSchema = new mongoose.Schema({
         required: [true, 'A tour must have a cover image']
     },
     images: [String],
+    ratingsAverage: {
+        type: Number,
+        default: 0
+    },
+    ratingsQuantity: {
+        type: Number,
+        default: 0
+    },
+    protectCar: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: Date.now(),

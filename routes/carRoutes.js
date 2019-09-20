@@ -3,9 +3,11 @@ const carController = require('../controllers/carController');
 
 const router = express.Router();
 
-
-router.route('/').get(carController.getAllCars).post(carController.postCar)
-router.route('/:id').get(carController.getCar).patch(carController.updateCar).delete(carController.deleteCar)
+router.route('/top-5-expensive-car').get(carController.topExpensiveCar, carController.getAllCars);
+router.route('/car-stats').get(carController.getCarStats)
+router.route('/car-by-feature/:feature').get(carController.getCarByFeature)
+router.route('/').get(carController.getAllCars).post(carController.postCar);
+router.route('/:id').get(carController.getCar).patch(carController.updateCar).delete(carController.deleteCar);
 
 
 module.exports = router;
@@ -18,5 +20,4 @@ module.exports = router;
 
 
 // router.get('/', carController.getAllCars)
-
 
