@@ -145,14 +145,15 @@ exports.deleteCar = async (req, res) => {
 
 
 exports.getCarByFeature = async (req, res) => {
+    console.log(req.params.feature)
     try{
         const feature = await Car.aggregate([
             {
-                $match: {price: {$gte: 10000}}
+                $unwind: '$features'
             },
             {
-                $unwind: '$features'
-            }
+                $match: {features: 'usb'}
+            },
         ])
 
         res.status(200).json({
