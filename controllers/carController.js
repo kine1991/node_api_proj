@@ -154,6 +154,17 @@ exports.getCarByFeature = async (req, res) => {
             {
                 $match: {features: 'usb'}
             },
+            {
+                $sort: {price: 1}
+            },
+            {
+                $project: {
+                  protectCar: 0,
+                }
+            },
+            {
+                $addFields: { fullName: {$concat: ['$brand', ' ', '$model']} }
+            },
         ])
 
         res.status(200).json({
