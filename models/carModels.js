@@ -41,7 +41,13 @@ let carSchema = new mongoose.Schema({
     },
     priceDiscount: {
         type: Number,
-        
+        validate: {
+            validator: function(val) {
+              // this point only to current doc on NEW creator
+              return val < this.price; // true - good  false - validation error  // val ~ {VALUE}
+            },
+            message: 'Discount Price {VALUE} should be bellow regular price'
+          }
     },
     transmission: {
         type: String,
