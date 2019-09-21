@@ -5,48 +5,76 @@ let carSchema = new mongoose.Schema({
     brand:  {
         type: String,
         required: [true, 'brand is require'],
-        trim: true
+        minlength: [2, 'brand should be equal 2 or more symbors'],
+        maxlength: [50, 'brand should be equal 50 or less symbors'],
+        trim: true,
+        // unique: true
     },
     model: {
         type: String,
         required: [true, 'model is require'],
-        trim: true
+        trim: true,
+        minlength: [2, 'model should be equal 2 or more symbors'],
+        maxlength: [50, 'model should be equal 50 or less symbors'],
+    },
+    slug:{
+        type: String,
+        // required: true,
+        // unique: true
     },
     description: {
         type: String,
         required: [true, 'description is require'],
+        minlength: [10, 'description should be equal 10 or more symbors'],
+        maxlength: [500, 'description should be equal 50 or less symbors'],
         trim: true
     },
     year: {
         type: Number,
         required: [true, 'year is require'], 
+        min: [1900, 'year should be equal 1900 or more'],
+        max: [2020, 'year should be equal 2020 or less'],
     },
     price: {
         type: Number,
         required: [true, 'price is require'], 
     },
+    priceDiscount: {
+        type: Number,
+        
+    },
     transmission: {
         type: String,
-        required: [true, 'transmission is require'], 
+        required: [true, 'transmission is require'],
+        enum: {
+            values: ['manual', 'automatic'],
+            message: 'Transmission is either: manual, automatic'
+        }
     },
     driveType: {
         type: String,
         required: [true, 'drive type is require'], 
+        enum: {
+            values: ['4WD', 'FWD', 'RWD'],
+            message: 'Drive type is either: 4WD, FWD, RWD'
+        }
     },
     fuelType: {
         type: String,
-        default: "Gasoline", 
+        default: "gasoline", 
+        enum: {
+            values: ['gasoline', 'diesel', 'electric', 'gas', 'hybrid'],
+            message: 'Fuel type is either: gasoline, diesel, electric, gas, hybrid'  
+        }
     },
     cylinder: {
         type: Number,
-        required: [true, 'cylinder is require'], 
+        required: [true, 'Cylinder is require'], 
+        min: [2, 'Cylinders should be equal 2 or more'],
+        max: [10, 'Cylinders should be equal 10 or less'],
     },
     features: {
         type: [String],
-    },
-    cylinder: {
-        type: Number,
-        required: [true, 'cylinder is require'], 
     },
     color: {
         type: String,
@@ -55,7 +83,11 @@ let carSchema = new mongoose.Schema({
     bodyStyle: {
         type: String,
         required: [true, 'body style is require'], 
-    },
+        enum: {
+            values: ['hatchback', 'sedan', 'coupe', 'convertible', 'pickup', 'suv'],
+            message: 'Body style is either: hatchback sedan, coupe, convertible, pickup, suv'  
+        }
+    }, // Hatchback, Sedan, Coupe (Купе), Convertible(кабриолет),Pickup (большие джипы), SUV (Sport Utility Vehicle BMVX5) 
     imageCover: {
         type: String,
         required: [true, 'A tour must have a cover image']
@@ -63,7 +95,9 @@ let carSchema = new mongoose.Schema({
     images: [String],
     ratingsAverage: {
         type: Number,
-        default: 0
+        default: 0,
+        min: [0, 'Rating must be above 0'],
+        max: [5, 'Rating must be below 5.0']
     },
     ratingsQuantity: {
         type: Number,
@@ -81,8 +115,6 @@ let carSchema = new mongoose.Schema({
         default: Date.now(),
         select: false
     },
-
-
 },
 {
   toJSON: { virtuals: true },
@@ -94,10 +126,10 @@ carSchema.virtual('priceInRubles').get(function(){
     return this.price * 60;
 }); 
 
-// carSchema.pre('save', function(next){
-//     return this.slug = slugify(this.brand+' '+this.model, { lower: true });
-//     next();
-// });
+carSchema.pre('save', function(next){
+    this.slug = slugify(this.brand+' '+this.model, { lower: true });
+    next();
+});
 
 carSchema.pre(/^find/, function(next){
     this.find({protectCar: { $ne: true }});

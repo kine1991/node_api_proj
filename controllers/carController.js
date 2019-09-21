@@ -151,20 +151,20 @@ exports.getCarByFeature = async (req, res) => {
             {
                 $unwind: '$features'
             },
-            // {
-            //     $match: {features: 'usb'}
-            // },
-            // {
-            //     $sort: {price: 1}
-            // },
-            // {
-            //     $project: {
-            //       protectCar: 0,
-            //     }
-            // },
-            // {
-            //     $addFields: { fullName: {$concat: ['$brand', ' ', '$model']} }
-            // },
+            {
+                $match: {features: 'usb'}
+            },
+            {
+                $sort: {price: 1}
+            },
+            {
+                $project: {
+                  protectCar: 0,
+                }
+            },
+            {
+                $addFields: { fullName: {$concat: ['$brand', ' ', '$model']} }
+            },
         ])
 
         res.status(200).json({
@@ -194,6 +194,13 @@ exports.getYearlyIncome = async (req, res) => {
                         $gte: new Date(`${year}-01-01`),
                         $lte: new Date(`${year}-12-31`)
                     } 
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    count: { $sum: 1 },
+                    yearIncome: { $sum: '$price' }
                 }
             }
         ])
