@@ -73,6 +73,9 @@ let carSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    datesOfSale: {
+        type: [Date]
+    },
     createdAt: {
         type: Date,
         default: Date.now(),
@@ -91,13 +94,20 @@ carSchema.virtual('priceInRubles').get(function(){
     return this.price * 60;
 }); 
 
-carSchema.pre('save', function(next){
-    return this.slug = slugify(this.name, { lower: true });
-    next();
-});
+// carSchema.pre('save', function(next){
+//     return this.slug = slugify(this.brand+' '+this.model, { lower: true });
+//     next();
+// });
 
 carSchema.pre(/^find/, function(next){
     this.find({protectCar: { $ne: true }});
+    next();
+});
+
+// AGGREGATION MIDDLEWARE
+carSchema.pre('aggregate', function(next) {
+    // console.log(this.pipeline());
+    this.pipeline().unshift({ $match: { protectCar: { $ne: true } } });
     next();
 });
 

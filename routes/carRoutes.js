@@ -4,8 +4,9 @@ const carController = require('../controllers/carController');
 const router = express.Router();
 
 router.route('/top-5-expensive-car').get(carController.topExpensiveCar, carController.getAllCars);
-router.route('/car-stats').get(carController.getCarStats)
-router.route('/car-by-feature/:feature').get(carController.getCarByFeature)
+router.route('/car-stats').get(carController.getCarStats);
+router.route('/car-by-feature/:feature').get(carController.getCarByFeature);
+router.route('/yearly-income/:year').get(carController.getYearlyIncome);
 router.route('/').get(carController.getAllCars).post(carController.postCar);
 router.route('/:id').get(carController.getCar).patch(carController.updateCar).delete(carController.deleteCar);
 

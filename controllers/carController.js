@@ -151,20 +151,20 @@ exports.getCarByFeature = async (req, res) => {
             {
                 $unwind: '$features'
             },
-            {
-                $match: {features: 'usb'}
-            },
-            {
-                $sort: {price: 1}
-            },
-            {
-                $project: {
-                  protectCar: 0,
-                }
-            },
-            {
-                $addFields: { fullName: {$concat: ['$brand', ' ', '$model']} }
-            },
+            // {
+            //     $match: {features: 'usb'}
+            // },
+            // {
+            //     $sort: {price: 1}
+            // },
+            // {
+            //     $project: {
+            //       protectCar: 0,
+            //     }
+            // },
+            // {
+            //     $addFields: { fullName: {$concat: ['$brand', ' ', '$model']} }
+            // },
         ])
 
         res.status(200).json({
@@ -180,6 +180,37 @@ exports.getCarByFeature = async (req, res) => {
         });
     }
 }
+
+exports.getYearlyIncome = async (req, res) => {
+    try{
+        const year = req.params.year
+        const income = await Car.aggregate([
+            {
+                $unwind: '$datesOfSale'
+            },
+            {
+                $match: { 
+                    datesOfSale: {
+                        $gte: new Date(`${year}-01-01`),
+                        $lte: new Date(`${year}-12-31`)
+                    } 
+                }
+            }
+        ])
+        res.status(200).json({
+            status: 'success',
+            data: {
+              income
+            }
+        });
+    } catch(err){
+        res.status(404).json({
+            status: 'fail',
+            message: err
+        });
+    }
+};
+
   // exports.getAllCars = async (req, res) => {
 //     try{
 //         // const cars = await Car.find({ fuelType: { $regex: "elec", $options: '-i' }})
