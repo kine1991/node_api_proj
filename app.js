@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController')
 
 const carRouter = require('./routes/carRoutes');
 // const userRouter = require('./routes/userRoutes');
@@ -29,19 +30,19 @@ app.all('*', (req, res, next) => {
   // err.status = 'fail';
   // err.statusCode = '404';
   // next(err);
-  const err = new AppError(`Can't find ${req.originalUrl} on this server!`, 404)
+  const err = new AppError(`Can't find ${req.originalUrl} on this server!`, 404);
   next(err); // при ошибке переходит к app.use((err, req, res, next) => ... см. ниже передает туда  err
 })
 
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'fail';
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message
-  });
-  
-})
+app.use(globalErrorHandler);
+// app.use((err, req, res, next) => {
+//   err.statusCode = err.statusCode || 500;
+//   err.status = err.status || 'fail';
+//   res.status(err.statusCode).json({
+//     status: err.status,
+//     message: err.message
+//   });
+// });
 
 // SERVER 
 module.exports = app;

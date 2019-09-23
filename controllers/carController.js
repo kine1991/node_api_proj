@@ -1,5 +1,6 @@
 const Car = require('../models/carModels')
-const APIFeatures = require('../utils/apiFeatures')
+const APIFeatures = require('../utils/apiFeatures');
+const AppErrpr = require('../utils/appError');
 
 exports.topExpensiveCar = async (req, res, next) => {
     req.query.sort = '-price';
@@ -34,9 +35,14 @@ exports.getAllCars = async (req, res) => {
     }
 }
 
-exports.getCar = async (req, res) => {
+exports.getCar = async (req, res, next) => {
     try{
         const car = await Car.findById(req.params.id)
+
+        if(!car) {
+            return next(new AppErrpr('No car found with that ID', 404));
+        }
+
         res.status(200).json({
             status: 'success',
             data: {
@@ -73,7 +79,11 @@ exports.updateCar = async (req, res) => {
         const car = await Car.findByIdAndUpdate(req.params.id, {"model": "model"}, {
             new: true,
             runValidators: true,
-        })
+        });
+
+        if (!tour) {
+            return next(new AppError('No tour found with that ID', 404));
+        };
 
         res.status(201).json({
             status: 'success',
@@ -91,7 +101,12 @@ exports.updateCar = async (req, res) => {
 
 exports.deleteCar = async (req, res) => {
     try {
-      await Car.findByIdAndDelete(req.params.id);
+      const car = await Car.findByIdAndDelete(req.params.id);
+
+      if (!tour) {
+        return next(new AppError('No tour found with that ID', 404));
+      };
+
       res.status(204).json({
         status: 'success',
         car: null
