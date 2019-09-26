@@ -16,6 +16,8 @@ let carSchema = new mongoose.Schema({
         trim: true,
         minlength: [2, 'model should be equal 2 or more symbors'],
         maxlength: [50, 'model should be equal 50 or less symbors'],
+        // unique: [true, 'Model sould be unique']
+        unique: true
     },
     slug:{
         type: String,

@@ -8,7 +8,7 @@ exports.topExpensiveCar = async (req, res, next) => {
     next();
 }
 
-exports.getAllCars = async (req, res) => {
+exports.getAllCars = async (req, res, next) => {
     try{
         const features = new APIFeatures(Car.find({}), req.query);
 
@@ -28,10 +28,7 @@ exports.getAllCars = async (req, res) => {
             }
         })
     } catch(err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        })
+        next(err);
     }
 }
 
@@ -50,7 +47,6 @@ exports.getCar = async (req, res, next) => {
             }
         })
     } catch(err){
-        // return next(err);
         next(err);
         // console.log(process.env.NODE_ENV)
         // res.status(404).json({
@@ -60,7 +56,7 @@ exports.getCar = async (req, res, next) => {
     }   
 }
 
-exports.postCar = async (req, res) => {
+exports.postCar = async (req, res, next) => {
     try{
         const newCar = await Car.create(req.body)
         res.status(201).json({
@@ -70,14 +66,11 @@ exports.postCar = async (req, res) => {
             }
         });
     } catch (err){
-        res.status(400).json({
-            status: 'fail',
-            massage: err
-        })
+        next(err);
     }
 } 
 
-exports.updateCar = async (req, res) => {
+exports.updateCar = async (req, res, next) => {
     try{
         const car = await Car.findByIdAndUpdate(req.params.id, {"model": "model"}, {
             new: true,
@@ -102,7 +95,7 @@ exports.updateCar = async (req, res) => {
     }
 }
 
-exports.deleteCar = async (req, res) => {
+exports.deleteCar = async (req, res, next) => {
     try {
       const car = await Car.findByIdAndDelete(req.params.id);
 
@@ -122,7 +115,7 @@ exports.deleteCar = async (req, res) => {
     }
   };
 
-  exports.getCarStats = async (req, res) => {
+  exports.getCarStats = async (req, res, next) => {
     try{
         const stats = await Car.aggregate([
             {
@@ -162,7 +155,7 @@ exports.deleteCar = async (req, res) => {
 }
 
 
-exports.getCarByFeature = async (req, res) => {
+exports.getCarByFeature = async (req, res, next) => {
     console.log(req.params.feature)
     try{
         const feature = await Car.aggregate([
@@ -199,7 +192,7 @@ exports.getCarByFeature = async (req, res) => {
     }
 }
 
-exports.getYearlyIncome = async (req, res) => {
+exports.getYearlyIncome = async (req, res, next) => {
     try{
         const year = req.params.year
         const income = await Car.aggregate([
@@ -236,7 +229,7 @@ exports.getYearlyIncome = async (req, res) => {
     }
 };
 
-  // exports.getAllCars = async (req, res) => {
+  // exports.getAllCars = async (req, res, next) => {
 //     try{
 //         // const cars = await Car.find({ fuelType: { $regex: "elec", $options: '-i' }})
 //         // 1) Filtering
