@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
-let carSchema = new mongoose.Schema({
+const carSchema = new mongoose.Schema({
     brand:  {
         type: String,
         required: [true, 'brand is require'],
