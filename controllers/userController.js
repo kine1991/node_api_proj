@@ -16,3 +16,16 @@ exports.getAllUsers = async (req, res, next) => {
     }
 
 }
+
+exports.deleteUser = async (req, res, next) => {
+    try{
+        res.status(204).json({
+            status: 'success',
+            data: {
+                user: null
+            }
+        });
+    } catch(err){
+        next(err);
+    }
+}

@@ -77,8 +77,8 @@ exports.updateCar = async (req, res, next) => {
             runValidators: true,
         });
 
-        if (!tour) {
-            return next(new AppError('No tour found with that ID', 404));
+        if (!car) {
+            return next(new AppError('No car found with that ID', 404));
         };
 
         res.status(201).json({
@@ -99,8 +99,8 @@ exports.deleteCar = async (req, res, next) => {
     try {
       const car = await Car.findByIdAndDelete(req.params.id);
 
-      if (!tour) {
-        return next(new AppError('No tour found with that ID', 404));
+      if (!car) {
+        return next(new AppError('No car found with that ID', 404));
       };
 
       res.status(204).json({
@@ -265,8 +265,8 @@ exports.getYearlyIncome = async (req, res, next) => {
 //         const skip = (page - 1) * limit;
         
 //         if (req.query.page) {
-//             const numTours = await Car.countDocuments(); // countDocuments соличество документов
-//             if (skip >= numTours) throw new Error('This page does not exist');
+//             const numcars = await Car.countDocuments(); // countDocuments соличество документов
+//             if (skip >= numcars) throw new Error('This page does not exist');
 //         }
 //         query = query.skip(skip).limit(limit);
 

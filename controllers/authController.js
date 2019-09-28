@@ -83,9 +83,12 @@ exports.protect = async (req, res, next) => {
             next(new AppError('User recently  changed password! Please login again.', 401));
         }
         req.user = currentUser;
+        console.log('next')
+        console.log(req.user)
         // GRANT ACESS TO PROTECTED ROUTE
         next();
     } catch(err){
+        console.log(err)
         next(err);
     }
 
