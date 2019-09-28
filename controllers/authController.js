@@ -15,7 +15,8 @@ exports.signup = async (req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            passwordChangedAt: req.body.passwordChangedAt
+            role: req.body.role,
+            passwordChangedAt: req.body.passwordChangedAt,
         });
 
         // const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {
@@ -83,13 +84,22 @@ exports.protect = async (req, res, next) => {
             next(new AppError('User recently  changed password! Please login again.', 401));
         }
         req.user = currentUser;
-        console.log('next')
-        console.log(req.user)
         // GRANT ACESS TO PROTECTED ROUTE
         next();
     } catch(err){
         console.log(err)
         next(err);
     }
-
 };
+
+exports.restrictTo = (...roles) => (req, res, next) => {
+    try{
+        if(!roles.includes(req.user.role)){
+            next(new AppError('You do not have premission to perform this action', 403));
+        }
+        next()
+    } catch(err){
+        next(err)
+    }
+
+}
