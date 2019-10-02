@@ -10,7 +10,16 @@ const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
-}
+};
+
+
+const createSendToken = (user, statusCode, res) => {
+    const token = signToken(user._id);
+    res.status(statusCode).json({
+        status: 'success',
+        token
+    });
+};
 
 exports.signup = async (req, res, next) => {
     try{
@@ -25,15 +34,16 @@ exports.signup = async (req, res, next) => {
         // const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {
         //     expiresIn: process.env.JWT_EXPIRES_IN
         // });
-        const token = signToken(newUser._id);
+        // const token = signToken(newUser._id);
 
-        res.status(201).json({
-            status: 'success',
-            token,
-            data: {
-                newUser
-            }
-        });
+        // res.status(201).json({
+        //     status: 'success',
+        //     token,
+        //     data: {
+        //         newUser
+        //     }
+        // });
+        createSendToken(newUser, 201, res);
     } catch(err){
         next(err)
     }
@@ -53,12 +63,7 @@ exports.login = async (req, res, next) => {
         };
         
         // 3) If everything ok send token to client
-        const token = signToken(user._id);
-
-        res.status(200).json({
-            status: 'success',
-            token
-        });
+        createSendToken(user, 200, res);
     } catch(err){
         next(err)
     }
@@ -168,12 +173,31 @@ exports.resetPassword = async (req, res, next) => {
     
         // 3) Update changedPasswordAt property for the user
         // 4) Log the user in send JWT
-        const token = signToken(user._id);
-        res.status(200).json({
-            status: 'success',
-            token
-        });
+        createSendToken(user, 200, res);
     } catch(err){
         next(err)
+    }
+};
+
+exports.updateMyPassword = async (req, res, next) => {
+    try{
+        // 1) Get user from collection
+        const user = await User.findById(req.user._id).select('+password');
+        if(!user){
+            return next(new AppError('Current user do not exists', 400));
+        }
+        // 2) Check if POSTed current password is correct
+        if(!(await user.correctPassword(req.body.passwordCurrent, user.password))){
+            return next(new AppError('Current password is wrong', 401));
+        }
+        // If so update password
+        user.password = req.body.password;
+        user.passwordConfirm = req.body.passwordConfirm;
+        console.log(user)
+        await user.save();
+          // 4) Log user in, send JWT
+        createSendToken(user, 200, res);
+    } catch(err){
+        next(err);
     }
 };
