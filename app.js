@@ -1,5 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController')
 
@@ -8,14 +14,48 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
-// 1) MIDDLEWARE
+// 1) GLOBAL MIDDLEWARE
+// Security HTTP headers
+app.use(helmet()); // устанавливает защищеные header
+
+// Development login
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-app.use(express.json());
-app.use(express.static(`${__dirname}/public`)); 
+// rateLimit
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try this again in an hour!'
+});
+app.use('/api', limiter);
 
+// Body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
 
+// Data sanitization agains XSS
+app.use(mongoSanitize()); // предотвращаем атаку вида email: {"$gt": ""}
+
+// Data sanitization agains MoSQL query injection
+app.use(xss()); // prevent attack through html
+// Prevent parametr polution
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsAverage',
+      'ratingsQuantity',
+      'maxGroupSize',
+      'difficulty',
+      'price'
+    ]
+  })
+); // если ввести два параметра ?sort=name&sort=age получаеться загрязненние параметров при использовании hpp() будет применятья последний sort=age
+
+// Serving static files
+app.use(express.static(`${__dirname}/public`));
+
+// testing
 app.use((req, res, next) => {
   // req.requestTime = new Date().toISOString();
   next();
