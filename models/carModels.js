@@ -133,6 +133,12 @@ const carSchema = new mongoose.Schema({
           ref: 'User'
         }
     ],
+    // reviews: [
+    //     {
+    //         type: mongoose.Schema.ObjectId,
+    //         ref: 'Review'
+    //     }
+    // ]
 },
 {
   toJSON: { virtuals: true },
@@ -143,6 +149,21 @@ const carSchema = new mongoose.Schema({
 carSchema.virtual('priceInRubles').get(function(){
     return this.price * 60;
 }); 
+
+// // Virtual populate
+// carSchema.virtual('reviews', {
+//     ref: 'Review',
+//     foreignField: 'car', // указывает на reviewModel поле car
+//     localField: '_id' // поле foreignField
+// });
+
+// Virtual populate
+carSchema.virtual('reviews', {
+    ref: 'Review',
+    foreignField: 'car',
+    localField: '_id'
+  });
+
 
 carSchema.pre('save', function(next){
     this.slug = slugify(this.brand+' '+this.model, { lower: true });
