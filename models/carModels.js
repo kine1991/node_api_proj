@@ -123,6 +123,16 @@ const carSchema = new mongoose.Schema({
         default: Date.now(),
         select: false
     },
+    sellers: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    },
+    usersLiked: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: 'User'
+        }
+    ],
 },
 {
   toJSON: { virtuals: true },
@@ -138,6 +148,17 @@ carSchema.pre('save', function(next){
     this.slug = slugify(this.brand+' '+this.model, { lower: true });
     next();
 });
+
+carSchema.pre(/^find/, function(next){
+    this.populate({
+        path: 'sellers',
+        select: '-__v -passwordChangedAt -passwordResetExpires -passwordResetToken'
+    }).populate({
+        path: 'usersLiked',
+        select: '-__v -passwordChangedAt -passwordResetExpires -passwordResetToken'
+    })
+    next()
+})
 
 carSchema.pre(/^find/, function(next){
     this.find({protectCar: { $ne: true }});
