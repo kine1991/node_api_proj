@@ -1,5 +1,7 @@
+
 [
     {
+        "_id": "5c88fa8cf4afda39709c2955",
         "brand": "BMW",
         "model": "X5",
         "description": "description1",
@@ -8,11 +10,11 @@
         "priceDiscount": 39000,
         "transmission": "manual",
         "driveType": "4WD",
-        "fuelType": "Gasoline",
+        "fuelType": "gasoline",
         "features": ["cruise-control", "turbo", "usb"],
         "cylinder": 6,
         "color": "black",
-        "bodyStyle": "SUV", 
+        "bodyStyle": "suv", 
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": false,
@@ -21,6 +23,7 @@
         "datesOfSale": ["2017-01-09T20:00:00.000Z", "2018-03-09T20:00:00.000Z", "2019-06-09T20:00:00.000Z"]
     },
     {
+        "_id": "5c88fa8cf4afda39709c2951",
         "brand": "BMW",
         "model": "X6",
         "description": "description2",
@@ -29,11 +32,11 @@
         "priceDiscount": 49000,
         "transmission": "automatic",
         "driveType": "4WD",
-        "fuelType": "Gasoline", 
+        "fuelType": "gasoline", 
         "features": ["usb"],
         "cylinder": 6,
         "color": "black",
-        "bodyStyle": "SUV", 
+        "bodyStyle": "suv", 
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": false,
@@ -42,6 +45,7 @@
         "datesOfSale": ["2015-03-09T20:00:00.000Z", "2017-04-09T20:00:00.000Z", "2018-07-09T20:00:00.000Z"]
     },
     {
+        "_id": "5c88fa8cf4afda39709c295a",
         "brand": "BMW",
         "model": "M6",
         "description": "description3",
@@ -50,11 +54,11 @@
         "priceDiscount": 64000,
         "transmission": "automatic",
         "driveType": "4WD", 
-        "fuelType": "Gasoline",
+        "fuelType": "gasoline",
         "features": ["cruise-control", "camera", "bluetooth"],
         "cylinder": 8,
         "color": "white",
-        "bodyStyle": "Coupe",
+        "bodyStyle": "coupe",
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": false,
@@ -63,6 +67,7 @@
         "datesOfSale": ["2016-10-09T20:00:00.000Z", "2016-12-09T20:00:00.000Z", "2017-10-20T20:00:00.000Z"]
     },
     {
+        "_id": "5c88fa8cf4afda39709c2961",
         "brand": "Ford",
         "model": "Mustang",
         "description": "description4",
@@ -71,11 +76,11 @@
         "priceDiscount": 24000,
         "transmission": "manual",
         "driveType": "RWD",
-        "fuelType": "Gasoline",
+        "fuelType": "gasoline",
         "features": ["bluetooth", "navigation"],
         "cylinder": 8,
         "color": "black",
-        "bodyStyle": "Coupe",
+        "bodyStyle": "coupe",
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": false,
@@ -84,6 +89,7 @@
         "datesOfSale": ["2016-12-09T20:00:00.000Z", "2019-10-29T20:00:00.000Z"]
     },
     {
+        "_id": "5c88fa8cf4afda39709c295d",
         "brand": "Honda",
         "model": "Accord",
         "description": "description7",
@@ -92,11 +98,11 @@
         "priceDiscount": 26000,
         "transmission": "manual",
         "driveType": "FWD",
-        "fuelType": "Gasoline",
+        "fuelType": "gasoline",
         "features": ["remote-start", "navigation"],
         "cylinder": 6,
         "color": "red",
-        "bodyStyle": "Sedan",
+        "bodyStyle": "sedan",
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": false,
@@ -105,6 +111,7 @@
         "datesOfSale": ["2017-04-09T20:00:00.000Z", "2018-05-09T20:00:00.000Z", "2019-08-09T20:00:00.000Z"]
     },
     {
+        "_id": "5c88fa8cf4afda39709c2966",
         "brand": "Volkswagen",
         "model": "Touareg",
         "description": "description8",
@@ -113,11 +120,11 @@
         "priceDiscount": 28000,
         "transmission": "automatic",
         "driveType": "4WD",
-        "fuelType": "Diesel",
+        "fuelType": "diesel",
         "features": ["navigation", "bluetooth", "usb"],
         "cylinder": 6,
         "color": "black",
-        "bodyStyle": "SUV",
+        "bodyStyle": "suv",
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": false,
@@ -126,6 +133,7 @@
         "datesOfSale": ["2014-12-12T20:00:00.000Z"]
     },
     {
+        "_id": "5c88fa8cf4afda39709c2970",
         "brand": "Kia",
         "model": "Soul",
         "description": "description8",
@@ -134,11 +142,11 @@
         "priceDiscount": 28000,
         "transmission": "automatic",
         "driveType": "4WD",
-        "fuelType": "Electric",
+        "fuelType": "electric",
         "features": ["bluetooth", "usb", "audio"],
         "cylinder": 6,
         "color": "black",
-        "bodyStyle": "Hatchback",
+        "bodyStyle": "hatchback",
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": true,
@@ -146,6 +154,7 @@
         "ratingsQuantity": 12
     },
     {
+        "_id": "5c88fa8cf4afda39709c2974",
         "brand": "Lada",
         "model": "Kalina",
         "description": "description8",
@@ -154,11 +163,11 @@
         "priceDiscount": 6800,
         "transmission": "manual",
         "driveType": "RWD",
-        "fuelType": "Gasoline",
+        "fuelType": "gasoline",
         "features": ["bluetooth", "usb", "audio"],
         "cylinder": 6,
         "color": "black",
-        "bodyStyle": "Hatchback",
+        "bodyStyle": "hatchback",
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": true,
@@ -166,6 +175,7 @@
         "ratingsQuantity": 12
     },
     {
+        "_id": "5c88fa8cf4afda39709c296c",
         "brand": "Lada",
         "model": "Vesta",
         "description": "description9",
@@ -174,15 +184,15 @@
         "priceDiscount": 5800,
         "transmission": "manual",
         "driveType": "RWD",
-        "fuelType": "Gasoline",
+        "fuelType": "gasoline",
         "features": ["bluetooth", "usb", "audio"],
         "cylinder": 6,
         "color": "black",
-        "bodyStyle": "Hatchback",
+        "bodyStyle": "hatchback",
         "imageCover": "image-1-cover.jpg",
         "images": ["image-1-1.jpg", "image-1-2.jpg", "image-1-3.jpg"],
         "protectCar": true,
         "ratingsAverage": 4.9,
         "ratingsQuantity": 12
     }
-]
+  ]

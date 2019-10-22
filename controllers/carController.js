@@ -1,6 +1,8 @@
 const Car = require('../models/carModels')
 const APIFeatures = require('../utils/apiFeatures');
 const AppErrpr = require('../utils/appError');
+const factory = require('./handlerFactory');
+
 
 exports.topExpensiveCar = async (req, res, next) => {
     req.query.sort = '-price';
@@ -28,6 +30,7 @@ exports.getAllCars = async (req, res, next) => {
             }
         })
     } catch(err) {
+        console.log(err)
         next(err);
     }
 }
@@ -49,17 +52,16 @@ exports.getCar = async (req, res, next) => {
         })
     } catch(err){
         next(err);
-        // console.log(process.env.NODE_ENV)
-        // res.status(404).json({
-        //     status: 'fail',
-        //     message: err
-        // })
     }   
-}
+} 
 
 exports.postCar = async (req, res, next) => {
     try{
+        console.log('req.body')
+        console.log(req.body)
         const newCar = await Car.create(req.body)
+        console.log('newCar')
+        console.log(newCar)
         res.status(201).json({
             status: 'success',
             data: {
@@ -96,6 +98,8 @@ exports.updateCar = async (req, res, next) => {
     }
 }
 
+// exports.deleteCar = factory.deleteOne(Car);
+
 exports.deleteCar = async (req, res, next) => {
     try {
       const car = await Car.findByIdAndDelete(req.params.id);
@@ -114,44 +118,44 @@ exports.deleteCar = async (req, res, next) => {
         message: 'err'
       });
     }
-  };
+};
 
-  exports.getCarStats = async (req, res, next) => {
-    try{
-        const stats = await Car.aggregate([
-            {
-                $match: {price: {$gte: 10000}}
+exports.getCarStats = async (req, res, next) => {
+try{
+    const stats = await Car.aggregate([
+        {
+            $match: {price: {$gte: 10000}}
+        },
+        {
+            $group: {
+                // _id: { $toUpper: '$transmission' }
+                _id: '$transmission',
+                count: { $sum: 1 },
+                totalPrice: { $sum: '$price' },
+                totalCylinder: { $sum: '$cylinder' },
+                avgPrice: { $avg: '$price' },
+                minPrice: { $min: '$price' },
+                maxPrice: { $max: '$price' },
+                avgRating: { $avg: '$ratingsAverage' },
+                // carWithSomeTransmission: { $push: {brand: '$brand', model: '$model'} },
+                carWithSomeTransmissionBrandAndModel: { $push: {  $concat: ['$brand', ' ', '$model']} }
+            
             },
-            {
-                $group: {
-                    // _id: { $toUpper: '$transmission' }
-                    _id: '$transmission',
-                    count: { $sum: 1 },
-                    totalPrice: { $sum: '$price' },
-                    totalCylinder: { $sum: '$cylinder' },
-                    avgPrice: { $avg: '$price' },
-                    minPrice: { $min: '$price' },
-                    maxPrice: { $max: '$price' },
-                    avgRating: { $avg: '$ratingsAverage' },
-                    // carWithSomeTransmission: { $push: {brand: '$brand', model: '$model'} },
-                    carWithSomeTransmissionBrandAndModel: { $push: {  $concat: ['$brand', ' ', '$model']} }
-                
-                },
-            }
-        ])
+        }
+    ])
 
-        res.status(200).json({
-            status: 'success',
-            data: {
-              stats
-            }
-          });
-    } catch(err){
-        res.status(404).json({
-            status: 'fail',
-            message: err
+    res.status(200).json({
+        status: 'success',
+        data: {
+            stats
+        }
         });
-    }
+} catch(err){
+    res.status(404).json({
+        status: 'fail',
+        message: err
+    });
+}
 
 }
 
