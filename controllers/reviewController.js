@@ -1,20 +1,6 @@
 const Review = require('../models/reviewModel');
-const catchAsync = require('../utils/catchAsync');
+// const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
-
-exports.getAllReview = catchAsync(async (req, res, next) => {
-    let filter = {};
-    if(req.params.carId) filter = {car: req.params.carId}
-    const reviews = await Review.find(filter)
-
-    res.status(200).json({
-        status: 'success',
-        results: reviews.length,
-        data: {
-            reviews
-        }
-    });
-});
 
 exports.setCarUserIds = (req, res, next) => {
     console.log('req.params')
@@ -24,9 +10,25 @@ exports.setCarUserIds = (req, res, next) => {
     next();
 }
 
+exports.getAllReview = factory.getAll(Review);
+exports.getReview = factory.getOne(Review);
 exports.updateReview = factory.updateOne(Review);
 exports.createReview = factory.createOne(Review);
 exports.deleteReview = factory.deleteOne(Review);
+
+// exports.getAllReview = catchAsync(async (req, res, next) => {
+//     let filter = {};
+//     if(req.params.carId) filter = {car: req.params.carId}
+//     const reviews = await Review.find(filter)
+
+//     res.status(200).json({
+//         status: 'success',
+//         results: reviews.length,
+//         data: {
+//             reviews
+//         }
+//     });
+// });
 
 // exports.createReview = catchAsync(async (req, res, next) => {
 //     if(!req.body.car) req.body.car = req.params.carId;

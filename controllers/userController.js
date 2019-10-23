@@ -12,37 +12,10 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 };
 
-exports.getAllUsers = async (req, res, next) => {
-    try{
-        const users = await User.find()
-
-        res.status(201).json({
-            status: 'success',
-            data: {
-                users
-            }
-        });
-    } catch(err) {
-        next(err);
-    }
-}
-
+exports.getAllUsers = factory.getAll(User);
 exports.deleteUser = factory.deleteOne(User);
-
 exports.updateUser = factory.updateOne(User);
-
-// exports.deleteUser = async (req, res, next) => {
-//     try{
-//         res.status(204).json({
-//             status: 'success',
-//             data: {
-//                 user: null
-//             }
-//         });
-//     } catch(err){
-//         next(err);
-//     }
-// };
+exports.getUser = factory.getOne(User)
 
 exports.updateMe = catchAsync(async (req, res, next) => {
     // 1) Create error if user POSTs password data
@@ -73,3 +46,31 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
         data: null
     });
 });
+
+// exports.deleteUser = async (req, res, next) => {
+//     try{
+//         res.status(204).json({
+//             status: 'success',
+//             data: {
+//                 user: null
+//             }
+//         });
+//     } catch(err){
+//         next(err);
+//     }
+// };
+
+// exports.getAllUsers = async (req, res, next) => {
+//     try{
+//         const users = await User.find()
+
+//         res.status(201).json({
+//             status: 'success',
+//             data: {
+//                 users
+//             }
+//         });
+//     } catch(err) {
+//         next(err);
+//     }
+// }

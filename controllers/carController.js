@@ -10,53 +10,33 @@ exports.topExpensiveCar = async (req, res, next) => {
     next();
 }
 
-exports.getAllCars = async (req, res, next) => {
-    try{
-        const features = new APIFeatures(Car.find({}), req.query);
+// exports.getAllCars = async (req, res, next) => {
+//     try{
+//         const features = new APIFeatures(Car.find({}), req.query);
 
-        features
-            .filter()
-            .sort()
-            .limitFields()
-            .paginate();
+//         features
+//             .filter()
+//             .sort()
+//             .limitFields()
+//             .paginate();
 
-        const cars = await features.query;
+//         const cars = await features.query;
 
-        res.status(200).json({
-            status: 'success',
-            retults: cars.length,
-            data: {
-                cars: cars
-            }
-        })
-    } catch(err) {
-        console.log(err)
-        next(err);
-    }
-}
+//         res.status(200).json({
+//             status: 'success',
+//             retults: cars.length,
+//             data: {
+//                 cars: cars
+//             }
+//         })
+//     } catch(err) {
+//         console.log(err)
+//         next(err);
+//     }
+// }
 
-exports.getCar = async (req, res, next) => {
-    try{
-        const car = await Car.findById(req.params.id)
-        .populate('reviews');
-
-        if(!car) {
-            return next(new AppErrpr('No car found with that ID', 404));
-        }
-
-        res.status(200).json({
-            status: 'success',
-            data: {
-                car: car
-            }
-        })
-    } catch(err){
-        next(err);
-    }   
-} 
-
-
-
+exports.getAllCars = factory.getAll(Car);
+exports.getCar = factory.getOne(Car, {path: 'reviews'});
 exports.postCar = factory.createOne(Car);
 exports.deleteCar = factory.deleteOne(Car);
 exports.updateCar = factory.updateOne(Car);
@@ -175,6 +155,26 @@ exports.getYearlyIncome = async (req, res, next) => {
         });
     }
 };
+
+// exports.getCar = async (req, res, next) => {
+//     try{
+//         const car = await Car.findById(req.params.id)
+//         .populate('reviews');
+
+//         if(!car) {
+//             return next(new AppErrpr('No car found with that ID', 404));
+//         }
+
+//         res.status(200).json({
+//             status: 'success',
+//             data: {
+//                 car: car
+//             }
+//         })
+//     } catch(err){
+//         next(err);
+//     }   
+// } 
 
 
 // exports.postCar = async (req, res, next) => {

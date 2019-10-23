@@ -37,23 +37,74 @@ exports.createOne = Model => catchAsync( async (req, res, next) => {
     data: {
       data: doc
     }
-});
+  });
 });
 
-// exports.postCar = async (req, res, next) => {
-//   try{
-//       console.log('req.body')
-//       console.log(req.body)
-//       const newCar = await Car.create(req.body)
-//       console.log('newCar')
-//       console.log(newCar)
-//       res.status(201).json({
-//           status: 'success',
-//           data: {
-//             car: newCar
-//           }
-//       });
-//   } catch (err){
-//       next(err);
-//   }
-// } 
+exports.getOne = (Model, populateOptions) => catchAsync( async (req, res, next) => {
+  let query = Model.findById(req.params.id);
+  if(populateOptions) query = query.populate(populateOptions);
+  const doc = await query;
+
+  if(!doc) {
+    return next(new AppErrpr('No document found with that ID', 404));
+  };
+
+  res.status(200).json({
+      status: 'success',
+      data: {
+          data: doc
+      }
+  });
+});
+
+
+exports.getAll = Model => catchAsync( async (req, res, next) => {
+  // To allow for nested GET reviews on tour
+  let filter = {};
+  console.log(req.params)
+  if(req.params.carId) filter = {car: req.params.carId}
+
+  // EXECUTE QUERY
+  const features = new APIFeatures(Model.find(filter), req.query);
+
+  features
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+
+  const doc = await features.query;
+
+  res.status(200).json({
+      status: 'success',
+      retults: doc.length,
+      data: {
+          data: doc
+      }
+  })
+});
+
+
+// exports.getAll = Model => catchAsync(async (req, res, next) => {
+  // // To allow for nested GET reviews on tour
+  // let filter = {};
+  // if(req.params.tourId) filter = {tour: req.params.tourId}
+
+  // // EXECUTE QUERY
+//   const features = new APIFeatures(Model.find(filter), req.query)
+//     .filter()
+//     .sort()
+//     .limitFields()
+//     .paginate();
+//   const doc = await features.query;
+
+//   // SEND RESPONSE
+//   res.status(200).json({
+//     status: 'success',
+//     results: doc.length,
+//     data: {
+//       data: doc
+//     }
+//   });
+// });
+
