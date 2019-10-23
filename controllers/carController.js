@@ -98,27 +98,27 @@ exports.updateCar = async (req, res, next) => {
     }
 }
 
-// exports.deleteCar = factory.deleteOne(Car);
+exports.deleteCar = factory.deleteOne(Car);
 
-exports.deleteCar = async (req, res, next) => {
-    try {
-      const car = await Car.findByIdAndDelete(req.params.id);
+// exports.deleteCar = async (req, res, next) => {
+//     try {
+//       const car = await Car.findByIdAndDelete(req.params.id);
 
-      if (!car) {
-        return next(new AppError('No car found with that ID', 404));
-      };
+//       if (!car) {
+//         return next(new AppError('No car found with that ID', 404));
+//       };
 
-      res.status(204).json({
-        status: 'success',
-        car: null
-      });
-    } catch (err) {
-      res.status(404).json({
-        status: 'fail',
-        message: 'err'
-      });
-    }
-};
+//       res.status(204).json({
+//         status: 'success',
+//         car: null
+//       });
+//     } catch (err) {
+//       res.status(404).json({
+//         status: 'fail',
+//         message: 'err'
+//       });
+//     }
+// };
 
 exports.getCarStats = async (req, res, next) => {
 try{
