@@ -29,6 +29,8 @@ exports.getAllUsers = async (req, res, next) => {
 
 exports.deleteUser = factory.deleteOne(User);
 
+exports.updateUser = factory.updateOne(User);
+
 // exports.deleteUser = async (req, res, next) => {
 //     try{
 //         res.status(204).json({

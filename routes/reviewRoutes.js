@@ -6,7 +6,7 @@ const router = express.Router({mergeParams: true}); // {mergeParams: true} по�
 
 router.use(authController.protect);
 
-router.route('/').get(reviewController.getAllReview).post(reviewController.createReview);
-router.route('/:id').delete(reviewController.deleteReview);
+router.route('/').get(reviewController.getAllReview).post(reviewController.setCarUserIds, reviewController.createReview);
+router.route('/:id').patch(reviewController.updateReview).delete(reviewController.deleteReview);
 
 module.exports = router; 

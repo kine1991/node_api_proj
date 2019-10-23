@@ -55,70 +55,12 @@ exports.getCar = async (req, res, next) => {
     }   
 } 
 
-exports.postCar = async (req, res, next) => {
-    try{
-        console.log('req.body')
-        console.log(req.body)
-        const newCar = await Car.create(req.body)
-        console.log('newCar')
-        console.log(newCar)
-        res.status(201).json({
-            status: 'success',
-            data: {
-              car: newCar
-            }
-        });
-    } catch (err){
-        next(err);
-    }
-} 
 
-exports.updateCar = async (req, res, next) => {
-    try{
-        const car = await Car.findByIdAndUpdate(req.params.id, {"model": "model"}, {
-            new: true,
-            runValidators: true,
-        });
 
-        if (!car) {
-            return next(new AppError('No car found with that ID', 404));
-        };
-
-        res.status(201).json({
-            status: 'success',
-            data: {
-              car: car
-            }
-        });
-    }catch(err){
-        res.status(400).json({
-            status: 'fail',
-            massage: err
-        })
-    }
-}
-
+exports.postCar = factory.createOne(Car);
 exports.deleteCar = factory.deleteOne(Car);
+exports.updateCar = factory.updateOne(Car);
 
-// exports.deleteCar = async (req, res, next) => {
-//     try {
-//       const car = await Car.findByIdAndDelete(req.params.id);
-
-//       if (!car) {
-//         return next(new AppError('No car found with that ID', 404));
-//       };
-
-//       res.status(204).json({
-//         status: 'success',
-//         car: null
-//       });
-//     } catch (err) {
-//       res.status(404).json({
-//         status: 'fail',
-//         message: 'err'
-//       });
-//     }
-// };
 
 exports.getCarStats = async (req, res, next) => {
 try{
@@ -233,6 +175,70 @@ exports.getYearlyIncome = async (req, res, next) => {
         });
     }
 };
+
+
+// exports.postCar = async (req, res, next) => {
+//     try{
+//         console.log('req.body')
+//         console.log(req.body)
+//         const newCar = await Car.create(req.body)
+//         console.log('newCar')
+//         console.log(newCar)
+//         res.status(201).json({
+//             status: 'success',
+//             data: {
+//               car: newCar
+//             }
+//         });
+//     } catch (err){
+//         next(err);
+//     }
+// } 
+
+// exports.updateCar = async (req, res, next) => {
+//     try{
+//         const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
+//             new: true,
+//             runValidators: true,
+//         });
+
+//         if (!car) {
+//             return next(new AppError('No car found with that ID', 404));
+//         };
+
+//         res.status(201).json({
+//             status: 'success',
+//             data: {
+//               car: car
+//             }
+//         });
+//     }catch(err){
+//         res.status(400).json({
+//             status: 'fail',
+//             massage: err
+//         })
+//     }
+// }
+
+// exports.deleteCar = async (req, res, next) => {
+//     try {
+//       const car = await Car.findByIdAndDelete(req.params.id);
+
+//       if (!car) {
+//         return next(new AppError('No car found with that ID', 404));
+//       };
+
+//       res.status(204).json({
+//         status: 'success',
+//         car: null
+//       });
+//     } catch (err) {
+//       res.status(404).json({
+//         status: 'fail',
+//         message: 'err'
+//       });
+//     }
+// };
 
   // exports.getAllCars = async (req, res, next) => {
 //     try{

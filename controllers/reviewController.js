@@ -16,19 +16,29 @@ exports.getAllReview = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.createReview = catchAsync(async (req, res, next) => {
+exports.setCarUserIds = (req, res, next) => {
+    console.log('req.params')
+    console.log(req.params)
     if(!req.body.car) req.body.car = req.params.carId;
-    if(!req.body.user) req.body.user = req.user._id
-    // console.log(req.body)
-    const newReview = await Review.create(req.body)
+    if(!req.body.user) req.body.user = req.user._id;
+    next();
+}
+
+exports.updateReview = factory.updateOne(Review);
+exports.createReview = factory.createOne(Review);
+exports.deleteReview = factory.deleteOne(Review);
+
+// exports.createReview = catchAsync(async (req, res, next) => {
+//     if(!req.body.car) req.body.car = req.params.carId;
+//     if(!req.body.user) req.body.user = req.user._id
+//     // console.log(req.body)
+//     const newReview = await Review.create(req.body)
 
     
-    res.status(201).json({
-        status: 'success',
-        data: {
-            reviews: newReview
-        }
-    });
-});
-
-exports.deleteReview = factory.deleteOne(Review);
+//     res.status(201).json({
+//         status: 'success',
+//         data: {
+//             reviews: newReview
+//         }
+//     });
+// });
