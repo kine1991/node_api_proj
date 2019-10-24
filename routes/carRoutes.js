@@ -13,9 +13,16 @@ router.use('/:carId/reviews', reviewRouter); // {mergeParams: true} позвол
 router.route('/top-5-expensive-car').get(carController.topExpensiveCar, carController.getAllCars);
 router.route('/car-stats').get(carController.getCarStats);
 router.route('/car-by-feature/:feature').get(carController.getCarByFeature);
-router.route('/yearly-income/:year').get(carController.getYearlyIncome);
-router.route('/').get(carController.getAllCars).post(carController.postCar);
-router.route('/:id').get(carController.getCar).patch(carController.updateCar).delete(authController.protect, authController.restrictTo('admin', 'moderator'), carController.deleteCar);
+router.route('/yearly-income/:year')
+    .get(authController.protect, authController.restrictTo('admin', 'company', 'moderator'), carController.getYearlyIncome);
+
+router.route('/')
+    .get(carController.getAllCars)
+    .post(authController.protect, authController.restrictTo('admin', 'company', 'moderator'), carController.postCar);
+router.route('/:id')
+    .get(carController.getCar)
+    .patch(authController.protect, authController.restrictTo('admin', 'company', 'moderator'), carController.updateCar)
+    .delete(authController.protect, authController.restrictTo('admin', 'company', 'moderator'), carController.deleteCar);
 
 module.exports = router;
 

@@ -145,6 +145,10 @@ const carSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
+// carSchema.index({price: 1});
+carSchema.index({price: 1, ratingsAverage: -1});
+carSchema.index({slug: 1});
+
 // virtual property do not use in query
 carSchema.virtual('priceInRubles').get(function(){
     return this.price * 60;
