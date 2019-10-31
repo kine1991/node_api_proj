@@ -8,8 +8,11 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
+
   submitted = false
+  isLoading = false
   form: FormGroup
+
 
   constructor(
     private auth: AuthService
@@ -44,6 +47,7 @@ export class SignInComponent implements OnInit {
   }
 
   submit(){
+    this.isLoading = true;
     const {email, password} = this.form.value
     this.auth.SignIn(email, password)
     console.log('email, password', email, password)

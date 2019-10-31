@@ -5,9 +5,9 @@
     <h1 class="header-name" [routerLink]="['/']" routerLinkActive="router-link-active">My App</h1>
     <div class="spacer"></div>
     <ul class="items" fxHide.xs>
-        <li *ngFor="let item of items; index as i" class="item"><a class="link_nav"
-                [routerLink]="[item.link]">{{item.name}}</a></li>
-        <li (click)="logout()" *ngIf="isAuthenticated" class="item"><a class="link_nav">Logout</a></li>
+        <li *ngFor="let item of items; index as i" class="item">
+            <a class="link_nav" [routerLink]="[item.link]">{{item.name}}</a></li>
+        <li (click)="logout()" *ngIf="userIsAuth" class="item"><a class="link_nav">Logout</a></li>
     </ul>
 </mat-toolbar>
 

@@ -102,7 +102,7 @@ exports.protect = async (req, res, next) => {
         }
         // 2) Verification token
         const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET); // если токен неправильный выдаст ошибку с именем JsonWebTokenError
-
+        
         // 3) Check if user still exists
         const currentUser = await User.findById(decode.id);
         if(!currentUser){

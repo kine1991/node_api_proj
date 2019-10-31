@@ -1,5 +1,5 @@
-<div *ngIf="cars.length" fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="center center">
-    <mat-card class="car-card" fxFlex="30%" class="example-card" *ngFor="let car of cars">
+<div *ngIf="cars" fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <mat-card class="car-card" fxFlex="30%" class="example-card" *ngFor="let car of cars.data.data">
         <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title>{{car.brand}} {{car.model}}</mat-card-title>

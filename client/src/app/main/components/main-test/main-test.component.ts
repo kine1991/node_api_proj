@@ -8,20 +8,24 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MainTestComponent implements OnInit {
 
-  cars = []
+  cars
   length
 
   constructor(
     private http: HttpClient
   ) { }
-
+ 
   ngOnInit() {
     this.http.get('http://localhost:3000/api/v1/cars').subscribe(cars => {
-      this.cars = cars.data.data
+      this.cars = cars
       // this.length = cars.data.data.length
       // console.log(cars)
       // console.log(cars.data.data)
     })
+
+    this.http.get('http://localhost:3000/api/v1/users/me').subscribe(users => {
+      console.log(users)
+    }) 
   }
 
 }

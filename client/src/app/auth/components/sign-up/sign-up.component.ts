@@ -10,6 +10,7 @@ import { AuthService } from '../../auth.service';
 export class SignUpComponent implements OnInit {
 
   form: FormGroup
+  isLoading = false
 
   constructor(
     private auth: AuthService
@@ -48,6 +49,7 @@ export class SignUpComponent implements OnInit {
   }
 
   submit(){
+    this.isLoading = true;
     const {name, email, password} = this.form.value;
     this.auth.SignUp(name, email, password);
     // console.log('name, email, password', name, email, password)

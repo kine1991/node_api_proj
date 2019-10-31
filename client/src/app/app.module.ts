@@ -10,6 +10,9 @@ import { MainLayoutComponent } from './main/components/main-layout/main-layout.c
 import { MainTestComponent } from './main/components/main-test/main-test.component';
 import { SignUpComponent } from './auth/components/sign-up/sign-up.component';
 import { SignInComponent } from './auth/components/sign-in/sign-in.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,7 @@ import { SignInComponent } from './auth/components/sign-in/sign-in.component';
     BrowserAnimationsModule,
     SharedModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

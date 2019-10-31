@@ -1,4 +1,5 @@
 <mat-card class="sign-in-page-mat-card">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
     <h1>Sign In</h1>
     <form [formGroup]="form" (ngSubmit)="submit()" class="sign-in-page-container">
         <mat-form-field>
@@ -12,7 +13,7 @@
                 {{getErrorMessageForPassword()}}</mat-error>
         </mat-form-field>
 
-        <button type="submit" [disabled]="form.invalid || submitted" mat-raised-button color="primary">Sign In</button>
+        <button *ngIf="!isLoading" type="submit" [disabled]="form.invalid || submitted" mat-raised-button color="primary">Sign In</button>
         <button (click)="signInWithGoogle()" type="button" mat-stroked-button color="primary" style="margin-top: 1rem">
             <mat-icon>3d_rotation</mat-icon> Sign In with google
         </button>
