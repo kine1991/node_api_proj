@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="header">
+    <button (click)="toggle()" class="icon-button" mat-icon-button fxHide.gt-xs>
+        <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="header-name" [routerLink]="['/']" routerLinkActive="router-link-active">My App</h1>
+    <div class="spacer"></div>
+    <ul class="items" fxHide.xs>
+        <li *ngFor="let item of items; index as i" class="item"><a class="link_nav"
+                [routerLink]="[item.link]">{{item.name}}</a></li>
+        <li (click)="logout()" *ngIf="isAuthenticated" class="item"><a class="link_nav">Logout</a></li>
+    </ul>
+</mat-toolbar>
+
+<mat-sidenav-container class="header-container">
+    <mat-sidenav [opened]="isOpen" (closed)="toggle()" [fixedInViewport]="true" [fixedTopGap]="0" [fixedBottomGap]="0">
+        <mat-nav-list *ngFor="let item of items; index as i">
+            <a mat-list-item [routerLink]="[item.link]">
+                <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+                {{item.name}}
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <!-- <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content> -->
+    <div class="content">
+        <ng-content></ng-content>
+    </div>
+</mat-sidenav-container>

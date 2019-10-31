@@ -1,20 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestComponent } from './components/test/test.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
+import { MainHeaderComponent } from './main/components/main-header/main-header.component';
+import { MainLayoutComponent } from './main/components/main-layout/main-layout.component';
+import { MainTestComponent } from './main/components/main-test/main-test.component';
+import { SignUpComponent } from './auth/components/sign-up/sign-up.component';
+import { SignInComponent } from './auth/components/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    MainHeaderComponent,
+    MainLayoutComponent,
+    MainTestComponent,
+    SignUpComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,17 @@
+.sign-up-page-container {
+    display: flex;
+    flex-direction: column;
+}
+  
+.sign-up-page-container > * {
+    width: 100%;
+}
+
+.sign-up-page-mat-card{
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.danger{
+    color: orangered;
+}

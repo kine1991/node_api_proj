@@ -1,0 +1,25 @@
+<mat-card class="sign-up-page-mat-card">
+        <h1>Sign Up</h1>
+        <form [formGroup]="form" (ngSubmit)="submit()" type="submit" class="sign-up-page-container">
+            <mat-form-field>
+                <input matInput placeholder="Enter your name" formControlName="name" required>
+                <mat-error *ngIf="form.get('name').invalid && form.get('name').touched">{{getErrorMessageForName()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="email"  placeholder="Enter your email" formControlName="email" required>
+                <mat-error *ngIf="form.get('email').invalid && form.get('email').touched">{{getErrorMessageForEmail()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Enter your password" formControlName="password" type="password">
+                <mat-error *ngIf="form.get('password').invalid && form.get('password').touched">{{getErrorMessageForPassword()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Confirm your password" formControlName="passwordConfirm" type="password">
+                <mat-error *ngIf="form.get('passwordConfirm').invalid && form.get('passwordConfirm').touched">{{getErrorMessageForPasswordConfirm()}}</mat-error>
+            </mat-form-field>
+    
+            <button type="submit" [disabled]="form.invalid || submitted" mat-raised-button color="primary" >Sign Up</button>
+            <button (click)="signInWithGoogle()" type="button" mat-stroked-button color="primary" style="margin-top: 1rem" ><mat-icon>3d_rotation</mat-icon>  Sign In with google</button>
+        </form>
+        
+    </mat-card>
