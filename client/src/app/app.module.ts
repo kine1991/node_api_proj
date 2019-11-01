@@ -13,6 +13,7 @@ import { SignInComponent } from './auth/components/sign-in/sign-in.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { Test3Component } from './main/components/test3/test3.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     MainLayoutComponent,
     MainTestComponent,
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
+    Test3Component
   ],
   imports: [
     BrowserModule,

@@ -23,9 +23,9 @@ export class MainTestComponent implements OnInit {
       // console.log(cars.data.data)
     })
 
-    this.http.get('http://localhost:3000/api/v1/users/me').subscribe(users => {
-      console.log(users)
-    }) 
+    // this.http.get('http://localhost:3000/api/v1/users/me').subscribe(users => {
+    //   console.log(users)
+    // }) 
   }
 
 }

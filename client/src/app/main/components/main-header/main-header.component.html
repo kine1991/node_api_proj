@@ -8,6 +8,7 @@
         <li *ngFor="let item of items; index as i" class="item">
             <a class="link_nav" [routerLink]="[item.link]">{{item.name}}</a></li>
         <li (click)="logout()" *ngIf="userIsAuth" class="item"><a class="link_nav">Logout</a></li>
+        <li  *ngIf="currentUser" class="item"><a (click)="test()" class="link_nav">{{currentUser.email}}</a></li>
     </ul>
 </mat-toolbar>
 

@@ -18,10 +18,10 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   private authListenerSubs: Subscription;
   isOpen = false
   isAuthenticated = true
+  currentUser
 
   items: ListMenu[] | [] = [
     { link: '/test', name: 'Test', icon: 'info' },
-    { link: '/test2', name: 'Test2', icon: 'info' },
     { link: '/sign-in', name: 'Sign In', icon: '3d_rotation' },
     { link: '/sign-up', name: 'Sign Up'},
   ]
@@ -39,18 +39,15 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.userIsAuth = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuth => {
       this.userIsAuth = isAuth;
     })
-
-    // if(this.userIsAuth){
-    //   console.log('1',this.userIsAuth)
-    //   this.items = this.itemsIsAuth
-    // } else{
-    //   console.log('2',this.userIsAuth)
-    //   this.items = this.itemsNotIsAuth 
-    // }
-    // console.log('this.userIsAuth', this.userIsAuth)
+    this.authService.getCurrentUserListener().subscribe(currentUser => {
+      console.log('currentUser', currentUser)
+      this.currentUser = currentUser
+    })
+    // this.currentUser = this.authService.currentUser
   }
 
   ngOnDestroy(){
@@ -65,4 +62,12 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     this.authService.logout()
   }
 
+  test(){
+    console.log(this.authService.currentUser)
+    // console.log('test - main-header', this.authService.currentUserListener)
+    // this.authService.getCurrentUserListener().subscribe(currentUser => {
+    //   console.log('currentUser - main-header')
+    //   console.log(currentUser)
+    // })
+  }
 }

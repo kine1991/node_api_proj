@@ -13,7 +13,8 @@ const routes: Routes = [
     {path: 'test', component: MainTestComponent, canActivate: [AuthGuard]},
     {path: 'sign-in', component: SignInComponent},
     {path: 'sign-up', component: SignUpComponent},
-    {path: 'test2', component: MainTestComponent, canActivate: [AuthGuard]}
+    {path: 'test2', component: MainTestComponent, canActivate: [AuthGuard]},
+    {path: 'test3', component: MainTestComponent},
   ]},
   // {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
 ];

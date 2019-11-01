@@ -15,7 +15,7 @@ export class SignInComponent implements OnInit {
 
 
   constructor(
-    private auth: AuthService
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -49,11 +49,11 @@ export class SignInComponent implements OnInit {
   submit(){
     this.isLoading = true;
     const {email, password} = this.form.value
-    this.auth.SignIn(email, password)
+    this.authService.SignIn(email, password)
     console.log('email, password', email, password)
   }
   
   signInWithGoogle(){
-    console.log('signInWithGoogle')
+    console.log('signInWithGoogle', this.authService.currentUser);
   }
 }
