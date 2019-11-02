@@ -1,0 +1,24 @@
+<mat-toolbar class="example-header">
+    <!-- <button *ngIf="!isOpen" (click)="toggle()" class="icon-button" mat-icon-button ><mat-icon>menu</mat-icon></button> -->
+    <button *ngIf="true" (click)="toggle()" class="icon-button" mat-icon-button ><mat-icon>menu</mat-icon></button>
+    Header
+    {{isOpen}}
+</mat-toolbar>
+
+<mat-sidenav-container class="admin-header-sidenav-container">
+    <mat-sidenav mode="side" [opened]="isOpen" class="admin-header-sidenav">
+        <mat-nav-list *ngIf="!isAuthenticated()">
+            <a routerLinkActive="active" mat-list-item [routerLink]="['/admin', 'login']" >login</a>
+            <a routerLinkActive="active" mat-list-item [routerLink]="['/admin', 'register']" >register</a>
+        </mat-nav-list>
+        <mat-nav-list *ngIf="isAuthenticated()">
+            <!-- <a mat-list-item routerLink="." *ngFor="let item of items; index as i">{{item.name}}</a> -->
+            <a routerLinkActive="active" mat-list-item [routerLink]="['/admin', 'articles-dashboard']" >main page</a>
+            <a routerLinkActive="active" mat-list-item [routerLink]="['/admin', 'articles-create']" >create</a>
+            <a (click)="logout($event)" mat-list-item >logout</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="admin-layout-sidenav-content">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

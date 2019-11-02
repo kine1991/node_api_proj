@@ -1,0 +1,17 @@
+.article-create-page-container {
+    display: flex;
+    flex-direction: column;
+}
+  
+.article-create-page-container > * {
+    width: 100%;
+}
+
+.article-create-page-mat-card{
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.danger{
+    color: orangered;
+}

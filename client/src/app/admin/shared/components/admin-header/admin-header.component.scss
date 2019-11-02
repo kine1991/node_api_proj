@@ -1,0 +1,24 @@
+.admin-header-sidenav-container {
+    position: absolute;
+    top: 60px;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+  }
+  
+  .admin-header-sidenav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    background: rgba(230, 230, 233, 0.9);
+  }
+  
+
+  .active{
+      color: orangered;
+  }
+
+  .admin-layout-sidenav-content{
+    padding: 1rem 2rem;
+  }

@@ -5,6 +5,7 @@ import { MainTestComponent } from './main/components/main-test/main-test.compone
 import { SignInComponent } from './auth/components/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/components/sign-up/sign-up.component';
 import { AuthGuard } from './auth/auth.guard';
+import { CarsComponent } from './cars/components/cars.component';
 
 
 const routes: Routes = [
@@ -15,8 +16,9 @@ const routes: Routes = [
     {path: 'sign-up', component: SignUpComponent},
     {path: 'test2', component: MainTestComponent, canActivate: [AuthGuard]},
     {path: 'test3', component: MainTestComponent},
+    {path: 'cars', component: CarsComponent},
   ]},
-  // {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
+  {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
 ];
 
 @NgModule({

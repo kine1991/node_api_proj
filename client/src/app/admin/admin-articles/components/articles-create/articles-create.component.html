@@ -1,0 +1,18 @@
+<div fxLayoutAlign="center center">
+<mat-card fxFlex.lt-md="100%" fxFlex="80%">
+        <h1>Create Article</h1>
+        <form [formGroup]="form" (ngSubmit)="submit()" fxLayout="column">
+            <mat-form-field>
+                <input matInput placeholder="Enter your title" formControlName="title" type="text" required>
+                <!-- <mat-error *ngIf="form.get('title').invalid && form.get('title').touched">{{getErrorMessageForTitle()}}</mat-error> -->
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Enter your body" formControlName="body" type="text">
+                <!-- <mat-error *ngIf="form.get('body').invalid && form.get('body').touched">{{getErrorMessageForBody()}}</mat-error> -->
+            </mat-form-field>
+
+            <button  type="submit" [disabled]="form.invalid || submitted" mat-raised-button color="primary">Create Article</button>
+        </form>
+        
+    </mat-card>
+</div>

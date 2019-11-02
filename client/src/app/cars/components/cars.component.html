@@ -1,0 +1,88 @@
+<div *ngIf="cars" fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <mat-card class="mat-space-bottom" class="car-card" fxFlex="30%" class="example-card" *ngFor="let car of cars.data.data">
+        <div class="xxx3">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>{{car.brand}} {{car.model}}</mat-card-title>
+                <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{car.description}}</p>
+                <p>{{car.year}}</p>
+                <p>{{car.price}}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+            </mat-card-actions>
+        </div>
+    </mat-card>
+</div>
+
+
+<!-- <pre>{{cars | json}}</pre> -->
+<!-- 
+<div class="xxx1" *ngIf="cars" fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <div class="xxx2" class="car-card" fxFlex="30%" class="example-card" *ngFor="let car of cars.data.data">
+        <div class="xxx3">
+            <div>
+                <div>{{car.brand}} {{car.model}}</div>
+                <div>Dog Breed</div>
+            </div>
+            <div>
+                <p>{{car.description}}</p>
+                <p>{{car.year}}</p>
+                <p>{{car.price}}</p>
+            </div>
+            <div>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div *ngIf="cars" fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="center center"> -->
+
+
+
+
+
+
+    <mat-card class="mat-space-bottom" class="car-card"  class="example-card">
+        <div class="xxx3">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>car.brand ar.model</mat-card-title>
+                <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>car.description</p>
+                <p>car.year</p>
+                <p>car.price</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+            </mat-card-actions>
+        </div>
+    </mat-card>
+    <mat-card class="mat-space-bottom" class="car-card"  class="example-card">
+        <div class="xxx3">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>car.brand ar.model</mat-card-title>
+                <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>car.description</p>
+                <p>car.year</p>
+                <p>car.price</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+            </mat-card-actions>
+        </div>
+    </mat-card>
+<!-- </div> -->

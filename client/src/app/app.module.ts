@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { Test3Component } from './main/components/test3/test3.component';
+import { CarsComponent } from './cars/components/cars.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { Test3Component } from './main/components/test3/test3.component';
     MainTestComponent,
     SignUpComponent,
     SignInComponent,
-    Test3Component
+    Test3Component,
+    CarsComponent
   ],
   imports: [
     BrowserModule,

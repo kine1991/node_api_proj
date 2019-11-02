@@ -20,16 +20,13 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = true
   currentUser
 
-  items: ListMenu[] | [] = [
-    { link: '/test', name: 'Test', icon: 'info' },
-    { link: '/sign-in', name: 'Sign In', icon: '3d_rotation' },
-    { link: '/sign-up', name: 'Sign Up'},
-  ]
+  items: ListMenu[] | [] = []
   itemsIsAuth: ListMenu[] = [
     { link: '/admin/create-article', name: 'Create Article', icon: 'info' },
+    { link: '/cars', name: 'Cars', icon: 'info' },
   ]
   itemsNotIsAuth: ListMenu[] = [
-    { link: '/admin/create-article', name: 'Create Article', icon: 'info' },
+    { link: '/cars', name: 'Cars', icon: 'info' },
     { link: '/sign-in', name: 'Sign In', icon: '3d_rotation' },
     { link: '/sign-up', name: 'Sign Up'},
   ]
@@ -39,12 +36,18 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    if(this.currentUser){
+      this.items = this.itemsIsAuth
+    } else{
+      this.items = this.itemsNotIsAuth
+    }
+
     this.userIsAuth = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuth => {
       this.userIsAuth = isAuth;
     })
     this.authService.getCurrentUserListener().subscribe(currentUser => {
-      console.log('currentUser', currentUser)
+      // console.log('currentUser', currentUser)
       this.currentUser = currentUser
     })
     // this.currentUser = this.authService.currentUser

@@ -38,8 +38,8 @@ export class AuthService {
 
   getCurrentUser(){
     this.http.get<{user: any, status: any}>('http://localhost:3000/api/v1/users/getCurrentUser').subscribe(response => {
-      console.log('response - getCurrentUser')
-      console.log(response)
+      // console.log('response - getCurrentUser')
+      // console.log(response)
       this.currentUser = response.user
       this.currentUserListener.next(response.user)
     })
@@ -47,8 +47,8 @@ export class AuthService {
 
   SignIn(email, password){
     this.http.post<{token: string, status: any, user: any}>('http://localhost:3000/api/v1/users/login', {email, password}).subscribe(response => {
-      console.log('response - signin')
-      console.log(response)
+      // console.log('response - signin')
+      // console.log(response)
       // console.log(token)
       this.currentUser = response.user
       this.currentUserListener.next(response.user)
@@ -65,7 +65,7 @@ export class AuthService {
   }
   SignUp(name, email, password){
     this.http.post('http://localhost:3000/api/v1/users/signup', {name, email, password}).subscribe(response => {
-      console.log(response)
+      // console.log(response)
     })
   }
 
@@ -85,6 +85,7 @@ export class AuthService {
     // this.currentUserListener.next(response.user)
     this.token = null;
     this.isAuthenticated = false;
+    this.currentUserListener.next(null)
     this.authStatusListener.next(false);
     this.clearAuthdata();
     this.router.navigate(['/sign-up']);
