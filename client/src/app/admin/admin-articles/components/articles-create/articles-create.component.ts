@@ -10,6 +10,7 @@ import { AdminArticlesService } from '../../admin-articles.service';
 export class ArticlesCreateComponent implements OnInit {
 
   form: FormGroup
+  articles
 
   constructor(
     private adminArticlesService: AdminArticlesService
@@ -23,8 +24,16 @@ export class ArticlesCreateComponent implements OnInit {
   }
 
   submit(){
-    console.log(this.form.value)
-    this.adminArticlesService.test()
+    const {title, body} = this.form.value
+    // console.log(this.form.value)
+    this.adminArticlesService.createArticle({title, body})
+  }
+
+  getAllArticles(){
+    this.adminArticlesService.getAllArticles().subscribe(articles => {
+      console.log(articles)
+      this.articles = articles
+    })
   }
 
 }

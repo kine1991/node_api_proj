@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         validate: {
             validator: function(el){
+                // if false  - validation error
                 return el === this.password; // this будеть работать только при сохранении (.create() .save()) update find не подходят
             },
             message: 'field confirm passsword do not match the same'
@@ -75,6 +76,7 @@ userSchema.pre(/^find/, function(next) {
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
     return await bcrypt.compare(candidatePassword, userPassword);
 };
+
 userSchema.methods.changedPasswordAfter = function(iat){
     if(this.passwordChangedAt){
         const passwordChangedAtDevidedByThousand = parseInt(this.passwordChangedAt.getTime() / 1000, 10);

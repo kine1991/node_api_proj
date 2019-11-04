@@ -11,7 +11,8 @@ import { ArticlesDashboardComponent } from './admin-articles/components/articles
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 
-
+// import { HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { AuthInterceptor } from '../auth/auth.interceptor';
 
 @NgModule({
   declarations: [AdminCarsComponent, CarsCreateComponent, CarsDashboardComponent, AdminHeaderComponent, AdminLayoutComponent, AdminArticlesComponent, ArticlesCreateComponent, ArticlesDashboardComponent],
@@ -29,6 +30,7 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     RouterModule
-  ]
+  ],
+  // providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 })
 export class AdminModule { }

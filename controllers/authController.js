@@ -49,14 +49,15 @@ exports.signup = catchAsync(async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        role: req.body.role,
-        passwordChangedAt: req.body.passwordChangedAt,
+        passwordConfirm: req.body.passwordConfirm,
+        // role: req.body.role,
+        // passwordChangedAt: req.body.passwordChangedAt,
     });
 
     // const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {
     //     expiresIn: process.env.JWT_EXPIRES_IN
     // });
-    // const token = signToken(newUser._id);
+    // // const token = signToken(newUser._id);
 
     // res.status(201).json({
     //     status: 'success',
@@ -65,6 +66,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     //         newUser
     //     }
     // });
+
+
     createSendToken(newUser, 201, res);
 });
 
@@ -76,12 +79,19 @@ exports.login = catchAsync(async (req, res, next) => {
     }
     // 2) check if email && password is correct
     const user = await User.findOne({email}).select('+password'); // select('+password') извлекаем дополнительное поле
-    if(!user || !( await user.correctPassword(password, user.password))){
+    const correct = await user.correctPassword(password, user.password); // correctPassword => bcrypt.compare(candidatePassword, userPassword)
+    // console.log(user)
+    if(!user || !correct){
         return next(new Error('Incorrect email or password', 401));
     };
     
-    // 3) If everything ok send token to client
-    createSendToken(user, 200, res);
+    // // 3) If everything ok send token to client
+    // createSendToken(user, 200, res);
+
+    const token = signToken(user._id)
+    res.status(200).json({
+        token
+    })
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -207,11 +217,12 @@ exports.forgotPassword = async (req, res, next) => {
         }
         // 2) Generate random reset token
         const resetToken = user.createPasswordResetToken();
+        console.log(resetToken);
         await user.save(); // { validateBeforeSave: false } - выключает всю валидацию в схеме
         // 3) Sent to email
         const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
         const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didnt foget your password, please ignore this email!`;
-        console.log(resetURL);
+        // console.log(resetURL);
         try{
             await sendEmail({
                 email: user.email,
@@ -241,7 +252,6 @@ exports.forgotPassword = async (req, res, next) => {
 
 exports.resetPassword = async (req, res, next) => {
     try{
-        console.log(req.params.token);
         // 1) Get user based on token
         const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex'); // хешируем его
         const user = await User.findOne({

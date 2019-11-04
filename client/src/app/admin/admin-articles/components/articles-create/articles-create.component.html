@@ -12,7 +12,19 @@
             </mat-form-field>
 
             <button  type="submit" [disabled]="form.invalid || submitted" mat-raised-button color="primary">Create Article</button>
+            
         </form>
         
     </mat-card>
 </div>
+
+<button (click)="getAllArticles()"  mat-raised-button color="warn">Get All Articles</button>
+
+<ng-container *ngIf="articles">
+    <!-- <pre>{{articles.data.articles | json}}</pre> -->
+    <div *ngFor="let article of articles.data.articles">
+        <h1>{{article.title}}</h1>
+        <p>{{article.body}}</p>
+        <a>{{article.creator.name}}</a>
+    </div>
+</ng-container>

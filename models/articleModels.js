@@ -14,6 +14,10 @@ const articleSchema = new mongoose.Schema({
     },
     slug: {
         type: String
+    },
+    creator: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
     }
 });
 

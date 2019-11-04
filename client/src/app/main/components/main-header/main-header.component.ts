@@ -26,6 +26,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     { link: '/cars', name: 'Cars', icon: 'info' },
   ]
   itemsNotIsAuth: ListMenu[] = [
+    { link: '/admin', name: 'Admin', icon: 'info' },
     { link: '/cars', name: 'Cars', icon: 'info' },
     { link: '/sign-in', name: 'Sign In', icon: '3d_rotation' },
     { link: '/sign-up', name: 'Sign Up'},
