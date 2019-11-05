@@ -23,7 +23,7 @@ const signToken = (id) => {
 
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
-  
+
     const cookieOptions = {
       expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
       // secure: false,
@@ -84,14 +84,13 @@ exports.login = catchAsync(async (req, res, next) => {
     if(!user || !correct){
         return next(new Error('Incorrect email or password', 401));
     };
-    
-    // // 3) If everything ok send token to client
-    // createSendToken(user, 200, res);
+    // 3) If everything ok send token to client
+    createSendToken(user, 200, res);
 
-    const token = signToken(user._id)
-    res.status(200).json({
-        token
-    })
+    // const token = signToken(user._id)
+    // res.status(200).json({
+    //     token
+    // })
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -290,7 +289,7 @@ exports.updateMyPassword = async (req, res, next) => {
         // If so update password
         user.password = req.body.password;
         user.passwordConfirm = req.body.passwordConfirm;
-        console.log(user)
+        // console.log(user)
         await user.save();
           // 4) Log user in, send JWT
         createSendToken(user, 200, res);
