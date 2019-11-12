@@ -6,6 +6,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors')
+const session = require('express-session')
+// const MongoDBStore = require('connect-mongodb-session')(session)
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController')
@@ -55,6 +57,15 @@ app.use(
     ]
   })
 ); // если ввести два параметра ?sort=name&sort=age получаеться загрязненние параметров при использовании hpp() будет применятья последний sort=age
+
+// const store = new MongoDBStore({
+//   url: process.env.DATABASE,
+//   // url: 'mongodb+srv://root:root@delete-fkc46.mongodb.net/test',
+//   collection: 'sessions'
+//   // DATABASE=mongodb+srv://root:<PASSWORD>@delete-fkc46.mongodb.net/test?retryWrites=true&w=majority
+// });
+// session
+app.use(session({secret: 'fdsfsfd', resave: false, saveUninitialized: false/*, store: store*/}))
 
 // Serving static files
 app.use(express.static(`${__dirname}/public`));
