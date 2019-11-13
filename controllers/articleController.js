@@ -1,25 +1,38 @@
 const Article = require('../models/articleModels');
 const catchAsync = require('../utils/catchAsync');
 // const AppErrpr = require('../utils/appError');
+
 const multer = require('multer');
 // const sharp = require('sharp');
 
 
 
-// Multer
+// Multer ---------------------------------------
+// ----------------------------------------------
+// ----------------------------------------------
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/img/articles')
+    const MIME_TYPE_MAP = {
+        'image/png': 'png',
+        'image/jpeg': 'jpg',
+        'image/jpg': 'jpg',
+    }
+    console.log(file.mimetype)
+    console.log(MIME_TYPE_MAP[file.mimetype])
+    // const isValid = MIME_TYPE_MAP[file.mimetype];
+    // let error = new Error('Invalid mimetype');
+    // if(isValid){
+    //     error = null
+    // }
+    // cb(error, 'public/img/articles');
+    cb(null, 'public/img/articles');
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split('/')[1];
-    console.log(file)
+    // console.log(file)
     req.photoName = `article-${req.user.id}-${Date.now()}.${ext}`
     cb(null, req.photoName)
     //   console.log('req.params.id')
-    //   console.log(req.params)
-    // cb(null, `article-${Date.now()}.${ext}`)
-    // null, file.filename + '-'
   }
 });
 
@@ -41,14 +54,12 @@ const upload = multer({
 exports.uploadArticleImages = upload.single('photo');
 // exports.uploadUserPhoto = upload.single('photo');
 
-
+// ----------------------------------------------
+// ----------------------------------------------
 // ----------------------------------------------
 
 
 exports.createArticle = catchAsync( async (req, res, next) => {
-    // console.log('req.body')
-    // console.log('req.file')
-    // console.log(req.file)
     // если есть загруженный файл изображкеие
     if(req.file) req.body.photo = req.file.filename;
     req.body.creator = req.user.id
@@ -66,10 +77,10 @@ exports.getAllArticles = catchAsync( async (req, res, next) => {
     // let fields = { title: 1, body: 1, 'creator.role': 1};
     // User.populate(user, { path: 'shortList.flat.project', model: 'Project', select: 'name' })
     // populate({ path: 'fans', select: 'name' }).
-    const articles = await Article.find({})
-    .populate('creator')
     // .select(fields)
     // res.setHeader('Set-Cookie', 'xxxIn=true')
+    const articles = await Article.find({})
+    .populate('creator')
     res.status(200).json({
         status: 'success',
         results: articles.length,
