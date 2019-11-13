@@ -32,8 +32,8 @@
     <div *ngFor="let article of articles.data.articles">
         <h1>{{article.title}}</h1>
         <p>{{article.body}}</p>
-        <p>{{article.photo}}</p>
-        <img [src]="article.photo" >
+        <p>{{article.imagePath}}</p>
+        <img [src]="article.imagePath" >
         <a>{{article.creator.name}}</a>
     </div>
 </ng-container>

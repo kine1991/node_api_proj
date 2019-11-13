@@ -36,7 +36,6 @@ export class ArticlesCreateComponent implements OnInit {
     this.form.get('image').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
-      // console.log(reader.result);
       this.imagePreview = reader.result;
     };
     

@@ -59,10 +59,21 @@ exports.uploadArticleImages = upload.single('image'); // одно фото с и
 
 
 exports.createArticle = catchAsync( async (req, res, next) => {
+    const url = req.protocol + "://" + req.get("host");
+    let imagePath;
     // если есть загруженный файл изображкеие
-    if(req.file) req.body.image = req.file.filename;
-    req.body.creator = req.user.id
-    const newArticle = await Article.create(req.body);
+    if(req.file){
+        imagePath = `${url}/img/articles/${req.file.filename}`; // http://localhost:3000/img/articles/article-5c8a1d5b0190b214360dc057-1573646948376.png
+    } else{
+        imagePath = undefined;
+    }
+    
+    const newArticle = await Article.create({
+        title: req.body.title,
+        body: req.body.body,
+        creator: req.user.id,
+        imagePath: imagePath
+    });
 
     res.status(201).json({
         status: 'success',
