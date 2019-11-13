@@ -12,7 +12,7 @@ const articleSchema = new mongoose.Schema({
         minlength: [2, 'body should be equal 2 or more symbors'],
         maxlength: [200, 'body should be equal 50 or less symbors'],
     },
-    photo: {
+    image: {
         type: String
     },
     slug: {

@@ -29,7 +29,7 @@ export class ArticlesCreateComponent implements OnInit {
       // })
     });
   }
-
+  
   onImagePicked(event: Event){
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({image: file});
@@ -45,9 +45,9 @@ export class ArticlesCreateComponent implements OnInit {
   }
 
   submit(){
-    const {title, body} = this.form.value
+    const {title, body, image} = this.form.value
     // console.log(this.form.value)
-    this.adminArticlesService.createArticle({title, body})
+    this.adminArticlesService.createArticle({title, body, image})
   }
 
   getAllArticles(){

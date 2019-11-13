@@ -11,7 +11,14 @@ export class AdminArticlesService {
   ) { }
 
   createArticle(data){
-    return this.http.post('http://localhost:3000/api/v1/articles', data).subscribe(x => console.log('xx',x))
+    const articleData = new FormData();
+    articleData.append("title", data.title);
+    articleData.append("body", data.body);
+    articleData.append("image", data.image);
+    console.log(articleData)
+    // articleData.append("image", data.image, data.title);
+
+    return this.http.post('http://localhost:3000/api/v1/articles', articleData).subscribe(x => console.log('xx',x))
   }
 
   getAllArticles(){

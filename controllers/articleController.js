@@ -17,21 +17,21 @@ const multerStorage = multer.diskStorage({
         'image/jpeg': 'jpg',
         'image/jpg': 'jpg',
     }
-    console.log(file.mimetype)
-    console.log(MIME_TYPE_MAP[file.mimetype])
-    // const isValid = MIME_TYPE_MAP[file.mimetype];
-    // let error = new Error('Invalid mimetype');
-    // if(isValid){
-    //     error = null
-    // }
-    // cb(error, 'public/img/articles');
-    cb(null, 'public/img/articles');
+    const isValid = MIME_TYPE_MAP[file.mimetype];
+    let error = new Error('Invalid mime type');
+    if(isValid){
+        error = null
+    }
+    cb(error, 'public/img/articles');
+    // cb(null, 'public/img/articles');
+    // console.log(file.mimetype)
+    // console.log(MIME_TYPE_MAP[file.mimetype])
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split('/')[1];
     // console.log(file)
-    req.photoName = `article-${req.user.id}-${Date.now()}.${ext}`
-    cb(null, req.photoName)
+    req.imageName = `article-${req.user.id}-${Date.now()}.${ext}`
+    cb(null, req.imageName)
     //   console.log('req.params.id')
   }
 });
@@ -51,8 +51,7 @@ const upload = multer({
     // fileFilter: multerFilter
 });
 
-exports.uploadArticleImages = upload.single('photo');
-// exports.uploadUserPhoto = upload.single('photo');
+exports.uploadArticleImages = upload.single('image'); // одно фото с именем req.body.image
 
 // ----------------------------------------------
 // ----------------------------------------------
@@ -61,7 +60,7 @@ exports.uploadArticleImages = upload.single('photo');
 
 exports.createArticle = catchAsync( async (req, res, next) => {
     // если есть загруженный файл изображкеие
-    if(req.file) req.body.photo = req.file.filename;
+    if(req.file) req.body.image = req.file.filename;
     req.body.creator = req.user.id
     const newArticle = await Article.create(req.body);
 
