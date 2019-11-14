@@ -10,12 +10,13 @@ import { ArticlesCreateComponent } from './admin-articles/components/articles-cr
 import { ArticlesDashboardComponent } from './admin-articles/components/articles-dashboard/articles-dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { AdminTestComponent } from './admin-test/admin-test.component';
 
 // import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { AuthInterceptor } from '../auth/auth.interceptor';
 
 @NgModule({
-  declarations: [AdminCarsComponent, CarsCreateComponent, CarsDashboardComponent, AdminHeaderComponent, AdminLayoutComponent, AdminArticlesComponent, ArticlesCreateComponent, ArticlesDashboardComponent],
+  declarations: [AdminCarsComponent, CarsCreateComponent, CarsDashboardComponent, AdminHeaderComponent, AdminLayoutComponent, AdminArticlesComponent, ArticlesCreateComponent, ArticlesDashboardComponent, AdminTestComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -24,7 +25,7 @@ import { RouterModule } from '@angular/router';
         {path: '', redirectTo: '/admin/articles-dashboard', pathMatch: 'full'},
         {path: 'articles-dashboard', component: ArticlesDashboardComponent},
         {path: 'articles-create', component: ArticlesCreateComponent},
-
+        {path: 'test', component: AdminTestComponent},
       ]}
     ])
   ],

@@ -10,45 +10,50 @@ const multer = require('multer');
 // Multer ---------------------------------------
 // ----------------------------------------------
 // ----------------------------------------------
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const MIME_TYPE_MAP = {
+//         'image/png': 'png',
+//         'image/jpeg': 'jpg',
+//         'image/jpg': 'jpg',
+//     }
+//     const isValid = MIME_TYPE_MAP[file.mimetype];
+//     let error = new Error('Invalid mime type');
+//     if(isValid){
+//         error = null
+//     }
+//     cb(error, 'public/img/articles');
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     req.imageName = `article-${req.user.id}-${Date.now()}.${ext}`
+//     cb(null, req.imageName)
+//   }
+// });
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const MIME_TYPE_MAP = {
-        'image/png': 'png',
-        'image/jpeg': 'jpg',
-        'image/jpg': 'jpg',
-    }
-    const isValid = MIME_TYPE_MAP[file.mimetype];
-    let error = new Error('Invalid mime type');
-    if(isValid){
-        error = null
-    }
-    cb(error, 'public/img/articles');
-    // cb(null, 'public/img/articles');
-    // console.log(file.mimetype)
-    // console.log(MIME_TYPE_MAP[file.mimetype])
+    cb(null, 'public/img/articles');
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split('/')[1];
-    // console.log(file)
     req.imageName = `article-${req.user.id}-${Date.now()}.${ext}`
     cb(null, req.imageName)
-    //   console.log('req.params.id')
   }
 });
 
 
-// const multerFilter = (req, file, cb) => {
-//     if(file.mimetype.startsWith('image')){
-//       cb(null, true);
-//     } else{
-//       cb(new AppError('Not an image! Please upload only images.', 400), false);
-//     }
-// }
+const multerFilter = (req, file, cb) => {
+    if(file.mimetype.startsWith('image')){
+      cb(null, true);
+    } else{
+      cb(new AppError('Not an image! Please upload only images.', 400), false);
+    }
+}
   
   
 const upload = multer({
     storage: multerStorage,
-    // fileFilter: multerFilter
+    fileFilter: multerFilter
 });
 
 exports.uploadArticleImages = upload.single('image'); // одно фото с именем req.body.image

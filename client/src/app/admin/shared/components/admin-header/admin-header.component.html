@@ -13,6 +13,7 @@
         </mat-nav-list>
         <mat-nav-list *ngIf="isAuthenticated()">
             <!-- <a mat-list-item routerLink="." *ngFor="let item of items; index as i">{{item.name}}</a> -->
+            <a routerLinkActive="active" mat-list-item [routerLink]="['/admin', 'test']" >test page</a>
             <a routerLinkActive="active" mat-list-item [routerLink]="['/cars']" >main page</a>
             <a routerLinkActive="active" mat-list-item [routerLink]="['/admin', 'articles-dashboard']" >dashboard</a>
             <a routerLinkActive="active" mat-list-item [routerLink]="['/admin', 'articles-create']" >create</a>
