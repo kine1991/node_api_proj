@@ -52,7 +52,7 @@ exports.resizeArticleImages = catchAsync(async (req, res, next) => {
                 .jpeg({ quality: 90 })
                 .toFile(`public/img/articles/${filename}`)
 
-            req.body.imagesPath.push(`public/img/articles/${filename}`);
+            req.body.imagesPath.push(`img/articles/${filename}`);
         })
     );
 

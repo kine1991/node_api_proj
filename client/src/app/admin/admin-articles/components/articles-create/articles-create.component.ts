@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AdminArticlesService } from '../../admin-articles.service';
+import { environment } from '../../../../../environments/environment'
+
 // import { mimeType } from './mime-type.validator';
 
 @Component({
@@ -12,7 +14,8 @@ export class ArticlesCreateComponent implements OnInit {
 
   form: FormGroup
   articles
-  imagePreview
+  imagesPreview
+  url = environment.url
 
   constructor(
     private adminArticlesService: AdminArticlesService
@@ -22,7 +25,7 @@ export class ArticlesCreateComponent implements OnInit {
     this.form = new FormGroup({
       title: new FormControl('', [Validators.required]),
       body: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(2000)]),
-      image: new FormControl(null)
+      images: new FormControl(null)
       // image: new FormControl(null, {
       //   validators: [Validators.required],
       //   asyncValidators: [mimeType]
@@ -32,29 +35,34 @@ export class ArticlesCreateComponent implements OnInit {
   
   onImagePicked(event: Event){
     const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({image: file});
-    this.form.get('image').updateValueAndValidity();
+    this.form.patchValue({images: file});
+    this.form.get('images').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
-      this.imagePreview = reader.result;
+      this.imagesPreview = reader.result;
     };
     
     reader.readAsDataURL(file);
-    // console.log(this.imagePreview)
   }
 
   submit(){
-    const {title, body, image} = this.form.value
-    // console.log(this.form.value)
-    this.adminArticlesService.createArticle({title, body, image})
+    console.log(this.form.value)
+    const {title, body, images} = this.form.value
+    this.adminArticlesService.createArticle({title, body, images})
   }
 
   getAllArticles(){
 
     this.adminArticlesService.getAllArticles().subscribe(articles => {
-      console.log(articles)
+      // console.log(articles)
       this.articles = articles
     })
+  }
+
+  getImagesPreview(){
+    // console.log(this.imagesPreview)
+    console.log('this.imagesPreview',this.imagesPreview)
+    // console.log('file', file)
   }
 
 }

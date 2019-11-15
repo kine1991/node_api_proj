@@ -10,8 +10,8 @@
                 <button (click)="filePicker.click()" type="button" mat-stroked-button>Pick Image</button>
                 <input type="file" #filePicker (change)="onImagePicked($event)">
             </div>
-            <div *ngIf="imagePreview !== '' && imagePreview" class="image-preview">
-                <img [src]="imagePreview" alt="">
+            <div *ngIf="imagesPreview !== '' && imagesPreview" class="image-preview">
+                <img [src]="imagesPreview" alt="">
             </div>
             <mat-form-field>
                 <input matInput placeholder="Enter your body" formControlName="body" type="text">
@@ -32,9 +32,19 @@
     <div *ngFor="let article of articles.data.articles">
         <h1>{{article.title}}</h1>
         <p>{{article.body}}</p>
-        <div *ngIf="article.imagePath" class="article-image">
-            <img [src]="article.imagePath" >
+        <div fxLayout="row wrap" *ngIf="article.imagesPath.length" class="article-image">
+            <div  *ngFor="let image of article.imagesPath">
+                <div fxFlex="30%">
+                    <img [src]="url + '/' + image" >
+                </div>
+            </div>
         </div>
         <a>{{article.creator.name}}</a>
     </div>
 </ng-container>
+
+<!-- {{articles | json}} -->
+
+{{url}}
+
+<button (click)="getImagesPreview()">getImagesPreview</button>

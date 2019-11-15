@@ -14,9 +14,9 @@ export class AdminArticlesService {
     const articleData = new FormData();
     articleData.append("title", data.title);
     articleData.append("body", data.body);
-    articleData.append("image", data.image);
+    articleData.append("images", data.images);
     console.log(articleData)
-    // articleData.append("image", data.image, data.title);
+    // articleData.append("images", data.images, data.title);
 
     return this.http.post('http://localhost:3000/api/v1/articles', articleData).subscribe(x => console.log('xx',x))
   }
