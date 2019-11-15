@@ -8,6 +8,11 @@ const router = express.Router();
 
 router.route('/')
     .get(articleController.getAllArticles)
-    .post(authController.protect, articleController.uploadArticleImages, articleController.createArticle)
+    .post(
+        authController.protect, 
+        articleController.uploadArticleImages, 
+        articleController.resizeArticleImages, 
+        articleController.createArticle
+    );
 
 module.exports = router;
